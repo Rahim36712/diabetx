@@ -79,10 +79,10 @@ export default function SideNavBar({
                 </div>
                 {item.badge && (
                   <span
-                    className={`text-[10px] font-mono px-2 py-0.5 rounded-full font-bold uppercase ${
+                    className={`text-[9px] font-mono px-1.5 py-px rounded-md font-bold uppercase leading-none ${
                       isActive
-                        ? "bg-cyan-400/20 text-cyan-300 border border-cyan-400/30"
-                        : "bg-white/5 text-[#94a3b8]"
+                        ? "bg-cyan-400/15 text-cyan-300"
+                        : "bg-white/5 text-[#64748b]"
                     }`}
                   >
                     {item.badge}

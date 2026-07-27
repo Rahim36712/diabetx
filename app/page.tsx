@@ -37,7 +37,7 @@ export default function Home() {
   const scores = latest ? computeScores(latest) : null;
 
   return (
-    <main className="md:ml-64 min-h-screen px-4 md:px-8 py-6 w-full flex-1 space-y-8 max-w-7xl">
+    <main className="md:ml-64 min-h-screen px-4 md:px-10 py-8 flex-1 space-y-8 max-w-6xl mx-auto">
       {!hydrated ? (
         <div className="flex items-center justify-center py-24 text-cyan-400 text-sm font-semibold gap-3 font-mono">
           <span className="w-2.5 h-2.5 rounded-full bg-cyan-400 animate-ping" />

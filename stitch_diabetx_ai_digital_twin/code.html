@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>DiabetX - Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/0.160.0/three.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+                  "tertiary-fixed-dim": "#c9c6c4",
+                  "tertiary-container": "#e6e2e0",
+                  "tertiary": "#605e5d",
+                  "error-container": "#ffdad6",
+                  "secondary": "#406907",
+                  "surface-container-low": "#f7f3f2",
+                  "primary-fixed-dim": "#c8c6c5",
+                  "error": "#ba1a1a",
+                  "primary-container": "#e5e3e2",
+                  "on-secondary-fixed": "#0f2000",
+                  "on-error-container": "#93000a",
+                  "inverse-on-surface": "#f4f0ef",
+                  "primary": "#5f5e5e",
+                  "secondary-container": "#bdef82",
+                  "inverse-primary": "#c8c6c5",
+                  "primary-fixed": "#e4e2e1",
+                  "surface-dim": "#ddd9d8",
+                  "on-tertiary-fixed-variant": "#484645",
+                  "inverse-surface": "#313030",
+                  "on-secondary-fixed-variant": "#2e4f00",
+                  "on-primary-fixed": "#1b1c1c",
+                  "on-secondary": "#ffffff",
+                  "surface-container-lowest": "#ffffff",
+                  "surface-bright": "#fdf8f7",
+                  "on-primary": "#ffffff",
+                  "surface-container-highest": "#e6e2e1",
+                  "surface-tint": "#5f5e5e",
+                  "on-tertiary-container": "#666463",
+                  "tertiary-fixed": "#e6e2e0",
+                  "on-secondary-container": "#446e0d",
+                  "on-primary-container": "#656564",
+                  "secondary-fixed": "#bff285",
+                  "on-background": "#1c1b1b",
+                  "surface-container-high": "#ebe7e6",
+                  "outline": "#7f7570",
+                  "on-tertiary": "#ffffff",
+                  "surface": "#fdf8f7",
+                  "on-error": "#ffffff",
+                  "on-tertiary-fixed": "#1c1b1a",
+                  "on-primary-fixed-variant": "#474746",
+                  "on-surface": "#1c1b1b",
+                  "surface-variant": "#e6e2e1",
+                  "surface-container": "#f1edec",
+                  "background": "#fdf8f7",
+                  "on-surface-variant": "#4d4541",
+                  "outline-variant": "#d0c4be",
+                  "secondary-fixed-dim": "#a4d56c"
+          },
+          "borderRadius": {
+                  "DEFAULT": "0.25rem",
+                  "lg": "0.5rem",
+                  "xl": "0.75rem",
+                  "full": "9999px"
+          },
+          "spacing": {
+                  "xs": "4px",
+                  "lg": "24px",
+                  "xl": "32px",
+                  "gutter": "16px",
+                  "sm": "8px",
+                  "md": "16px",
+                  "margin": "24px",
+                  "base": "8px",
+                  "container-max": "1280px",
+                  "xxl": "64px"
+          },
+          "fontFamily": {
+                  "label-md": [ "Comfortaa" ],
+                  "body-md": [ "Comfortaa" ],
+                  "headline-lg": [ "Comfortaa" ],
+                  "headline-md": [ "Comfortaa" ],
+                  "body-lg": [ "Comfortaa" ],
+                  "display-lg": ["Comfortaa"],
+                  "metric-xl": ["Comfortaa"],
+                  "label-sm": ["Comfortaa"],
+                  "headline-lg-mobile": ["Comfortaa"],
+                  "display-xl": ["Comfortaa"]
+          },
+          "fontSize": {
+                  "label-md": [ "12px", { "lineHeight": "16px", "fontWeight": "500" } ],
+                  "body-md": [ "14px", { "lineHeight": "20px", "fontWeight": "400" } ],
+                  "headline-lg": [ "32px", { "lineHeight": "40px", "fontWeight": "700" } ],
+                  "headline-md": [ "24px", { "lineHeight": "32px", "fontWeight": "600" } ],
+                  "body-lg": [ "16px", { "lineHeight": "24px", "fontWeight": "400" } ],
+                  "display-lg": ["36px", { "lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+                  "metric-xl": ["40px", { "lineHeight": "1", "letterSpacing": "0.02em", "fontWeight": "700" }],
+                  "label-sm": ["12px", { "lineHeight": "1.2", "fontWeight": "600" }],
+                  "headline-lg-mobile": ["24px", { "lineHeight": "1.3", "fontWeight": "600" }],
+                  "display-xl": ["48px", { "lineHeight": "1.1", "letterSpacing": "-0.04em", "fontWeight": "600" }]
+          }
+        },
+      },
+    }
+  </script>
+<style>
+    body {
+        background-color: transparent;
+        color: theme('colors.on-surface');
+        margin: 0;
+        overflow-x: hidden;
+    }
+
+    #shader-background {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        z-index: -2;
+        pointer-events: none;
+    }
+    
+    .ambient-glow-cyan {
+        position: absolute;
+        top: -10%;
+        left: -10%;
+        width: 50vw;
+        height: 50vw;
+        background: radial-gradient(circle, rgba(95, 94, 94, 0.08) 0%, rgba(95, 94, 94, 0) 70%);
+        border-radius: 50%;
+        pointer-events: none;
+        z-index: -1;
+    }
+
+    .ambient-glow-violet {
+        position: absolute;
+        top: 20%;
+        right: -20%;
+        width: 60vw;
+        height: 60vw;
+        background: radial-gradient(circle, rgba(189, 239, 130, 0.15) 0%, rgba(189, 239, 130, 0) 70%);
+        border-radius: 50%;
+        pointer-events: none;
+        z-index: -1;
+    }
+
+    .glass-card {
+        background: rgba(253, 248, 247, 0.6);
+        backdrop-filter: blur(40px);
+        -webkit-backdrop-filter: blur(40px);
+        border: 1px solid rgba(255, 255, 255, 0.5);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.05);
+        transition: all 0.5s ease-out;
+    }
+    
+    .glass-card:hover {
+        background: rgba(253, 248, 247, 0.8);
+        transform: translateY(-2px);
+        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1);
+        border-color: rgba(255, 255, 255, 0.8);
+    }
+
+    .progress-ring-circle {
+        transition: stroke-dashoffset 1s ease-in-out;
+        transform: rotate(-90deg);
+        transform-origin: 50% 50%;
+        animation: breathe-pulse 4s ease-in-out infinite;
+    }
+
+    @keyframes slide-in-left {
+        from { transform: translateX(-100%); opacity: 0; }
+        to { transform: translateX(0); opacity: 1; }
+    }
+
+    @keyframes fade-in-up {
+        from { transform: translateY(20px); opacity: 0; }
+        to { transform: translateY(0); opacity: 1; }
+    }
+
+    @keyframes breathe-pulse {
+        0%, 100% { filter: drop-shadow(0 0 2px rgba(189, 239, 130, 0.3)); stroke-width: 8; }
+        50% { filter: drop-shadow(0 0 8px rgba(189, 239, 130, 0.7)); stroke-width: 9; }
+    }
+
+    .animate-sidebar { animation: slide-in-left 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+    .animate-card { opacity: 0; animation: fade-in-up 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+    .delay-100 { animation-delay: 100ms; }
+    .delay-200 { animation-delay: 200ms; }
+  </style>
+</head>
+<body class="font-body-md antialiased min-h-screen">
+<canvas id="shader-background"></canvas>
+<div class="ambient-glow-cyan"></div>
+<div class="ambient-glow-violet"></div>
+<!-- Sidebar -->
+<aside class="hidden md:flex flex-col h-screen py-xl px-md gap-lg bg-surface-container-lowest/70 backdrop-blur-3xl border-r border-outline-variant/20 shadow-xl w-64 fixed left-0 top-0 z-40 animate-sidebar">
+<div class="mb-lg">
+<h1 class="font-display-lg text-headline-lg text-primary">DiabetX</h1>
+<p class="font-label-sm text-label-sm text-on-surface-variant mt-1">Digital Twin Active</p>
+</div>
+<div class="flex flex-col gap-sm flex-1">
+<a class="flex items-center gap-sm p-sm rounded-lg bg-primary-container/40 text-primary border-r-4 border-primary hover:bg-surface-variant transition-all duration-300" href="#">
+<span class="material-symbols-outlined" style='font-variation-settings: "FILL" 1;'>dashboard</span>
+<span class="font-label-md text-label-md">Dashboard</span>
+</a>
+<a class="flex items-center gap-sm p-sm rounded-lg text-on-surface-variant hover:bg-surface-variant hover:text-primary transition-all duration-300" href="#">
+<span class="material-symbols-outlined">query_stats</span>
+<span class="font-label-md text-label-md">Twin Engine</span>
+</a>
+<a class="flex items-center gap-sm p-sm rounded-lg text-on-surface-variant hover:bg-surface-variant hover:text-primary transition-all duration-300" href="#">
+<span class="material-symbols-outlined">auto_graph</span>
+<span class="font-label-md text-label-md">Insights</span>
+</a>
+<a class="flex items-center gap-sm p-sm rounded-lg text-on-surface-variant hover:bg-surface-variant hover:text-primary transition-all duration-300" href="#">
+<span class="material-symbols-outlined">history_edu</span>
+<span class="font-label-md text-label-md">Logbook</span>
+</a>
+<a class="flex items-center gap-sm p-sm rounded-lg text-on-surface-variant hover:bg-surface-variant hover:text-primary transition-all duration-300" href="#">
+<span class="material-symbols-outlined">smart_toy</span>
+<span class="font-label-md text-label-md">Coach</span>
+</a>
+</div>
+<button class="mt-auto w-full py-sm rounded-lg bg-gradient-to-r from-primary to-secondary-container text-on-primary font-label-md text-label-md font-bold shadow-md hover:scale-[1.02] transition-all duration-300">
+      Simulate Change
+    </button>
+<div class="mt-sm flex items-center gap-sm pt-sm border-t border-outline-variant/20">
+<div class="w-8 h-8 rounded-full bg-surface-variant overflow-hidden">
+<img alt="User Profile" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCJkmafn00hZUcesItHhOmld5fueGBXV_SuOOkSP6wWHh1kBoZfetkS17Lsg_yzfsAuhKjOtG9iVB_UnrfuPaCrS5rDo7FZAB6WAz-uYjAogFQfVdUF6UqwhrHGQSWoaOpE_D_mvedQbaFRsg33raJMgv8ImXvo69BspPuoSUoeVsgABf9KN33u_jCfvwNHT8rdVcZgoLInAAS04VWx04BbhVQuWRC5V2TUFb81ur0M68cEXbEWCVhs-_LopsC5eUdLQnyQEYRfMw"/>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant">User Profile</span>
+</div>
+</aside>
+<!-- Mobile Header -->
+<header class="md:hidden fixed top-0 left-0 w-full z-50 flex justify-between items-center px-gutter py-md bg-surface-container-lowest/80 backdrop-blur-3xl border-b border-outline-variant/20 shadow-sm">
+<h1 class="font-display-lg text-headline-lg-mobile font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">DiabetX</h1>
+<div class="flex gap-sm text-primary">
+<button class="p-xs text-primary font-bold border-b-2 border-primary">
+<span class="material-symbols-outlined">dashboard</span>
+</button>
+<button class="p-xs text-on-surface-variant">
+<span class="material-symbols-outlined">account_circle</span>
+</button>
+</div>
+</header>
+<!-- Main Content Wrapper -->
+<div class="flex flex-col min-h-screen">
+<!-- Main Content Area -->
+<main class="flex-1 md:ml-64 pt-xxl md:pt-xl px-gutter pb-xl relative z-10 w-full">
+<div class="max-w-container-max mx-auto">
+<!-- Dashboard Layout Grid -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-xl">
+<!-- 3D Model Panel (Center-Left) -->
+<section class="lg:col-span-7 flex flex-col gap-md">
+<div class="glass-card rounded-xl p-lg md:p-xl flex flex-col h-[500px] md:h-[600px] animate-card delay-100">
+<div class="flex justify-between items-center mb-md">
+<div>
+<h3 class="font-headline-md text-headline-md text-on-surface">3D Digital Twin</h3>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Live physiological sync</p>
+</div>
+<div class="flex items-center gap-xs">
+<div class="w-2 h-2 rounded-full bg-secondary animate-pulse"></div>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Live</span>
+</div>
+</div>
+<!-- Dedicated 3D Container -->
+<div class="flex-grow w-full relative" id="threejs-container"></div>
+<div class="mt-md pt-md border-t border-outline-variant/20 flex justify-center gap-xl">
+<div class="flex items-center gap-xs text-on-surface-variant">
+<span class="material-symbols-outlined text-[16px]">mouse</span>
+<span class="font-label-sm text-label-sm">Rotate Model</span>
+</div>
+<div class="flex items-center gap-xs text-on-surface-variant">
+<span class="material-symbols-outlined text-[16px]">touch_app</span>
+<span class="font-label-sm text-label-sm">Interact</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Stats & Insights Panel (Right) -->
+<section class="lg:col-span-5 flex flex-col gap-lg">
+<!-- Twin Score Glass Panel -->
+<div class="glass-card rounded-xl p-lg flex flex-col items-center animate-card delay-200">
+<div class="relative w-48 h-48 flex items-center justify-center">
+<svg class="w-full h-full" viewbox="0 0 100 100">
+<circle class="text-surface-variant stroke-current" cx="50" cy="50" fill="transparent" r="40" stroke-width="8"></circle>
+<circle class="progress-ring-circle stroke-current" cx="50" cy="50" fill="transparent" r="40" stroke-dasharray="251.2" stroke-dashoffset="40.19" stroke-linecap="round" stroke-width="8" style="stroke: url(#gradient);"></circle>
+<defs>
+<lineargradient id="gradient" x1="0%" x2="100%" y1="0%" y2="0%">
+<stop offset="0%" stop-color="#5f5e5e"></stop>
+<stop offset="100%" stop-color="#bdef82"></stop>
+</lineargradient>
+</defs>
+</svg>
+<div class="absolute inset-0 flex flex-col items-center justify-center">
+<span class="font-display-lg text-[48px] leading-none text-on-surface">84</span>
+<span class="font-label-md text-[10px] text-primary uppercase tracking-[0.2em] mt-1">Twin Score</span>
+</div>
+</div>
+<p class="font-body-lg text-body-lg text-on-surface-variant text-center mt-lg">
+                Metabolic resilience is improving. A 15-min walk is recommended after dinner.
+              </p>
+</div>
+<!-- Mini Stats Grid -->
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-md animate-card delay-200" style="animation-delay: 300ms">
+<div class="glass-card rounded-xl p-md">
+<div class="flex justify-between items-center mb-xs">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Metabolic</span>
+<span class="font-label-md text-label-md text-on-surface font-bold">88</span>
+</div>
+<div class="h-1.5 w-full bg-surface-variant rounded-full overflow-hidden">
+<div class="h-full bg-primary w-[88%] rounded-full"></div>
+</div>
+</div>
+<div class="glass-card rounded-xl p-md">
+<div class="flex justify-between items-center mb-xs">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Activity</span>
+<span class="font-label-md text-label-md text-on-surface font-bold">72</span>
+</div>
+<div class="h-1.5 w-full bg-surface-variant rounded-full overflow-hidden">
+<div class="h-full bg-secondary-container w-[72%] rounded-full"></div>
+</div>
+</div>
+<div class="glass-card rounded-xl p-md sm:col-span-2">
+<div class="flex justify-between items-center mb-xs">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Nutrition Compliance</span>
+<span class="font-label-md text-label-md text-on-surface font-bold">94%</span>
+</div>
+<div class="h-1.5 w-full bg-surface-variant rounded-full overflow-hidden">
+<div class="h-full bg-secondary-container w-[94%] rounded-full"></div>
+</div>
+</div>
+</div>
+</section>
+</div>
+</div>
+</main>
+<!-- Footer Area (Docked Bottom) -->
+<footer class="md:ml-64 py-lg px-gutter bg-surface-container-lowest/60 backdrop-blur-3xl border-t border-outline-variant/20 z-10 mt-auto">
+<div class="max-w-container-max mx-auto flex flex-col md:flex-row justify-between items-center gap-md opacity-80">
+<p class="font-label-sm text-[10px] text-on-surface-variant text-center md:text-left">
+          © 2026 DiabetX AI. Educational tool only — not medical advice. Consult a physician for treatment changes.
+        </p>
+<div class="flex gap-md">
+<a class="font-label-sm text-[10px] text-on-surface-variant hover:text-primary transition-colors" href="#">Privacy</a>
+<a class="font-label-sm text-[10px] text-on-surface-variant hover:text-primary transition-colors" href="#">Terms</a>
+<a class="font-label-sm text-[10px] text-on-surface-variant hover:text-primary transition-colors" href="#">Help</a>
+</div>
+</div>
+</footer>
+</div>
+<script>
+    // Shader Background script
+    const canvas = document.getElementById('shader-background');
+    const gl = canvas.getContext('webgl');
+    if (gl) {
+        const vs = `attribute vec2 position; varying vec2 v_uv; void main() { gl_Position = vec4(position, 0.0, 1.0); v_uv = position * 0.5 + 0.5; }`;
+        const fs = `precision highp float; varying vec2 v_uv; uniform float u_time; void main() { 
+            vec3 c1 = vec3(0.992, 0.973, 0.969); vec3 c2 = vec3(0.867, 0.851, 0.847);
+            float n = sin(v_uv.x * 2.0 + u_time * 0.1) * cos(v_uv.y * 2.0 - u_time * 0.1);
+            gl_FragColor = vec4(mix(c1, c2, n * 0.1 + 0.1), 1.0); }`;
+        const compile = (t, s) => { const sh = gl.createShader(t); gl.shaderSource(sh, s); gl.compileShader(sh); return sh; };
+        const prog = gl.createProgram(); gl.attachShader(prog, compile(gl.VERTEX_SHADER, vs)); gl.attachShader(prog, compile(gl.FRAGMENT_SHADER, fs)); gl.linkProgram(prog); gl.useProgram(prog);
+        gl.bindBuffer(gl.ARRAY_BUFFER, gl.createBuffer()); gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1,1,-1,-1,1,-1,1,1,-1,1,1]), gl.STATIC_DRAW);
+        const pos = gl.getAttribLocation(prog, "position"); gl.enableVertexAttribArray(pos); gl.vertexAttribPointer(pos, 2, gl.FLOAT, false, 0, 0);
+        const ut = gl.getUniformLocation(prog, "u_time");
+        function render(t) { 
+          canvas.width = window.innerWidth; canvas.height = window.innerHeight; gl.viewport(0, 0, canvas.width, canvas.height);
+          gl.uniform1f(ut, t * 0.001); gl.drawArrays(gl.TRIANGLES, 0, 6); requestAnimationFrame(render); 
+        }
+        requestAnimationFrame(render);
+    }
+
+    // Three.js 3D Model Logic
+    document.addEventListener('DOMContentLoaded', () => {
+        const container = document.getElementById('threejs-container');
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(50, container.offsetWidth / container.offsetHeight, 0.1, 1000);
+        camera.position.z = 4.5;
+        const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+        renderer.setSize(container.offsetWidth, container.offsetHeight);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        container.appendChild(renderer.domElement);
+
+        scene.add(new THREE.AmbientLight(0xffffff, 0.8));
+        const l1 = new THREE.PointLight(0xbdef82, 1.5); l1.position.set(5, 5, 5); scene.add(l1);
+        const l2 = new THREE.PointLight(0x5f5e5e, 1); l2.position.set(-5, -2, 2); scene.add(l2);
+
+        const material = new THREE.MeshPhysicalMaterial({ color: 0xe6e2e1, metalness: 0.1, roughness: 0.1, transmission: 0.6, transparent: true, opacity: 0.9 });
+        const twinGroup = new THREE.Group();
+        
+        const head = new THREE.Mesh(new THREE.SphereGeometry(0.45, 32, 32), material); head.position.y = 1.3; twinGroup.add(head);
+        const torso = new THREE.Mesh(new THREE.CylinderGeometry(0.35, 0.55, 1.3, 32), material); torso.position.y = 0.4; twinGroup.add(torso);
+        const lArm = new THREE.Mesh(new THREE.CapsuleGeometry(0.12, 0.7, 8, 16), material); lArm.position.set(-0.65, 0.7, 0); lArm.rotation.z = 0.7; twinGroup.add(lArm);
+        const rArm = new THREE.Mesh(new THREE.CapsuleGeometry(0.12, 0.7, 8, 16), material); rArm.position.set(0.65, 0.7, 0); rArm.rotation.z = -0.7; twinGroup.add(rArm);
+        const legs = new THREE.Mesh(new THREE.CapsuleGeometry(0.18, 1.2, 8, 16), material); legs.position.set(0, -1.0, 0); twinGroup.add(legs);
+        
+        scene.add(twinGroup);
+
+        let mouseX = 0;
+        container.addEventListener('mousemove', (e) => {
+          const rect = container.getBoundingClientRect();
+          mouseX = ((e.clientX - rect.left) / rect.width) - 0.5;
+        });
+
+        function animate() {
+          requestAnimationFrame(animate);
+          const t = Date.now() * 0.001;
+          twinGroup.position.y = Math.sin(t) * 0.05;
+          twinGroup.rotation.y += (mouseX * 1.5 - twinGroup.rotation.y) * 0.05 + 0.01;
+          renderer.render(scene, camera);
+        }
+
+        window.addEventListener('resize', () => {
+          if (!container.offsetWidth) return;
+          camera.aspect = container.offsetWidth / container.offsetHeight;
+          camera.updateProjectionMatrix();
+          renderer.setSize(container.offsetWidth, container.offsetHeight);
+        });
+
+        animate();
+    });
+  </script>
+</body></html>

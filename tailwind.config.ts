@@ -1,0 +1,113 @@
+import type { Config } from "tailwindcss";
+
+const config: Config = {
+  content: [
+    "./app/**/*.{js,ts,jsx,tsx,mdx}",
+    "./components/**/*.{js,ts,jsx,tsx,mdx}",
+  ],
+  theme: {
+    extend: {
+      colors: {
+        "surface-container-lowest": "#0A0E1A",
+        "surface-container-low": "#131826",
+        "surface-container": "#181F30",
+        "surface-container-high": "#232B3D",
+        "surface-container-highest": "#2E384D",
+        surface: "#0A0E1A",
+        background: "#0A0E1A",
+        "on-surface": "#E5E7EB",
+        "on-background": "#E5E7EB",
+        cyan: {
+          DEFAULT: "#22D3EE",
+          50: "#ECFEFF",
+          100: "#CFFAFE",
+          200: "#A5F3FC",
+          300: "#67E8F9",
+          400: "#22D3EE",
+          500: "#06B6D4",
+          600: "#0891B2",
+          700: "#0E7490",
+          800: "#155E75",
+          900: "#164E63",
+        },
+        violet: {
+          DEFAULT: "#8B5CF6",
+          50: "#F5F3FF",
+          100: "#EDE9FE",
+          200: "#DDD6FE",
+          300: "#C4B5FD",
+          400: "#A78BFA",
+          500: "#8B5CF6",
+          600: "#7C3AED",
+          700: "#6D28D9",
+          800: "#5B21B6",
+          900: "#4C1D95",
+        },
+        twin: {
+          bg: "#0A0E1A",
+          panel: "#131826",
+          border: "#232B3D",
+          cyan: "#22D3EE",
+          violet: "#8B5CF6",
+          good: "#34D399",
+          warn: "#FBBF24",
+          bad: "#F87171",
+          text: "#E5E7EB",
+          muted: "#94A3B8",
+        },
+      },
+      fontFamily: {
+        sans: ["Inter", "ui-sans-serif", "system-ui", "sans-serif"],
+        display: ['"Space Grotesk"', "ui-sans-serif", "system-ui", "sans-serif"],
+        comfortaa: ["Comfortaa", "cursive", "sans-serif"],
+        inter: ["Inter", "sans-serif"],
+        grotesk: ['"Space Grotesk"', "sans-serif"],
+        "label-md": ["Comfortaa", "sans-serif"],
+        "body-md": ["Comfortaa", "sans-serif"],
+        "headline-lg": ["Comfortaa", "sans-serif"],
+        "headline-md": ["Comfortaa", "sans-serif"],
+        "body-lg": ["Comfortaa", "sans-serif"],
+        "display-lg": ["Comfortaa", "sans-serif"],
+        "metric-xl": ["Comfortaa", "sans-serif"],
+        "label-sm": ["Comfortaa", "sans-serif"],
+        "headline-lg-mobile": ["Comfortaa", "sans-serif"],
+        "display-xl": ["Comfortaa", "sans-serif"],
+      },
+      spacing: {
+        gutter: "16px",
+        xl: "32px",
+        xxl: "64px",
+        xs: "4px",
+        sm: "8px",
+        md: "16px",
+        lg: "24px",
+        margin: "24px",
+        base: "8px",
+        "container-max": "1280px",
+      },
+      keyframes: {
+        "breathe-pulse": {
+          "0%, 100%": { transform: "scale(1)", opacity: "0.8" },
+          "50%": { transform: "scale(1.05)", opacity: "1" },
+        },
+        "fade-in-up": {
+          "0%": { opacity: "0", transform: "translateY(16px)" },
+          "100%": { opacity: "1", transform: "translateY(0)" },
+        },
+        "slide-in-left": {
+          "0%": { opacity: "0", transform: "translateX(-20px)" },
+          "100%": { opacity: "1", transform: "translateX(0)" },
+        },
+      },
+      animation: {
+        "breathe-pulse": "breathe-pulse 6s ease-in-out infinite",
+        "fade-in-up": "fade-in-up 0.5s ease-out forwards",
+        "slide-in-left": "slide-in-left 0.4s ease-out forwards",
+      },
+    },
+  },
+  plugins: [],
+};
+
+export default config;
+

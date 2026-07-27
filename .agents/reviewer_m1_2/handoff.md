@@ -51,7 +51,7 @@ Milestone 1 (M1: Config & Security Review) is **APPROVED**. Secret isolation, `.
 
 To independently verify these results:
 
-1. **Secret Scan**: Run `Get-ChildItem -Recurse -File -Path app, components, lib, context, tests | Select-String -Pattern "AIzaSy|AQ\.Ab8"` in PowerShell. Confirm 0 matches outside `.env.local`.
+1. **Secret Scan**: Run `Get-ChildItem -Recurse -File -Path app, components, lib, context, tests | Select-String -Pattern "AIzaSy|<REDACTED_PATTERN>"` in PowerShell. Confirm 0 matches outside `.env.local`.
 2. **Type Check**: Run `npx tsc --noEmit` from project root (`d:\diabetx`). Confirm exit code 0.
 3. **Production Build**: Run `npx next build` from project root. Confirm successful compilation and static page generation.
 4. **Test Suite**: Run `npx tsx tests/empirical_verification.tsx` and `npx tsx tests/stress_verification.tsx`. Confirm 100% pass rate.

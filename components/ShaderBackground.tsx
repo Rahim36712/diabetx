@@ -77,22 +77,22 @@ export default function ShaderBackground() {
       void main() {
         vec2 uv = v_texCoord;
         
-        // Deep cyber dark background #0A0E1A
-        vec3 baseColor = vec3(0.039, 0.055, 0.102); 
-        // Subtle cyan glow #0E3A4B
-        vec3 cyanGlow  = vec3(0.055, 0.227, 0.294);
-        // Subtle violet glow #1E1238
-        vec3 violetGlow = vec3(0.118, 0.071, 0.220);
+        // Deep obsidian dark background #060B08
+        vec3 baseColor = vec3(0.023, 0.043, 0.031); 
+        // Subtle Lime Green glow #28440B
+        vec3 limeGlow  = vec3(0.156, 0.266, 0.043);
+        // Subtle Emerald glow #0A3222
+        vec3 emeraldGlow = vec3(0.039, 0.196, 0.133);
         
         float n1 = snoise(uv * 1.2 + u_time * 0.04);
         float n2 = snoise(uv * 2.5 - u_time * 0.06);
         
-        vec3 finalColor = mix(baseColor, cyanGlow, clamp(n1 * 0.35 + 0.15, 0.0, 1.0));
-        finalColor = mix(finalColor, violetGlow, clamp(n2 * 0.3 + 0.1, 0.0, 1.0));
+        vec3 finalColor = mix(baseColor, limeGlow, clamp(n1 * 0.3 + 0.1, 0.0, 1.0));
+        finalColor = mix(finalColor, emeraldGlow, clamp(n2 * 0.25 + 0.1, 0.0, 1.0));
         
         // Soft film grain
         float grain = fract(sin(dot(uv, vec2(12.9898, 78.233) + u_time)) * 43758.5453);
-        finalColor += (grain - 0.5) * 0.015;
+        finalColor += (grain - 0.5) * 0.012;
         
         gl_FragColor = vec4(finalColor, 1.0);
       }

@@ -27,7 +27,7 @@ function SubCard({
     score >= 80 ? "OPTIMAL" : score >= 60 ? "GOOD" : "NEEDS FOCUS";
 
   return (
-    <div className="glass-card p-4 md:p-5 rounded-2xl flex flex-col justify-between space-y-4 border border-white/10 hover:border-cyan-500/30 transition-all duration-300 shadow-xl group relative overflow-hidden">
+    <div className="glass-card p-4 md:p-5 rounded-2xl flex flex-col justify-between space-y-4 border border-white/10 hover:border-lime-500/40 transition-all duration-300 shadow-xl group relative overflow-hidden font-sans">
       {/* Top row: Icon badge + Status badge + Score */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2.5">
@@ -35,13 +35,13 @@ function SubCard({
             <span className={`material-symbols-outlined ${colorClass} text-xl`}>{icon}</span>
           </div>
           <div>
-            <h3 className="font-display font-bold text-sm text-slate-100">{label}</h3>
-            <span className="text-[11px] font-mono text-slate-400 block">{metricsHint}</span>
+            <h3 className="font-display font-bold text-sm text-white">{label}</h3>
+            <span className="text-[11px] font-mono text-slate-300 block">{metricsHint}</span>
           </div>
         </div>
 
         <div className="text-right">
-          <span className="font-display text-2xl md:text-3xl font-extrabold text-slate-100 block tracking-tight">
+          <span className="font-display text-2xl md:text-3xl font-extrabold text-white block tracking-tight">
             {score}
           </span>
         </div>
@@ -52,13 +52,13 @@ function SubCard({
         <span className={`px-2 py-0.5 rounded-full font-mono text-[10px] font-bold uppercase border ${badgeClass}`}>
           {statusBadge}
         </span>
-        <span className="font-mono text-[11px] text-slate-400 font-medium">
+        <span className="font-mono text-[11px] text-slate-300 font-medium">
           {targetRange}
         </span>
       </div>
 
       {/* Progress Bar (h-1.5) */}
-      <div className="w-full bg-[#0A0E1A] h-1.5 rounded-full overflow-hidden border border-white/5">
+      <div className="w-full bg-[#060B08] h-1.5 rounded-full overflow-hidden border border-white/5">
         <div
           className={`h-full rounded-full ${barGradient} transition-all duration-700 ease-out`}
           style={{ width: `${Math.min(100, Math.max(0, score))}%` }}
@@ -77,10 +77,10 @@ export default function ScoreCards({ scores }: { scores: TwinScores }) {
         metricsHint="HbA1c & Glucose"
         targetRange="80–100 Target"
         icon="monitor_heart"
-        colorClass="text-emerald-400"
-        bgClass="bg-emerald-500/15 border-emerald-500/30"
-        badgeClass="bg-emerald-500/15 text-emerald-400 border-emerald-500/30"
-        barGradient="bg-gradient-to-r from-emerald-500 to-cyan-400"
+        colorClass="text-lime-400"
+        bgClass="bg-lime-500/15 border-lime-500/30"
+        badgeClass="bg-lime-500/15 text-lime-400 border-lime-500/30"
+        barGradient="bg-gradient-to-r from-lime-500 to-emerald-400"
       />
       <SubCard
         label="Activity"
@@ -88,10 +88,10 @@ export default function ScoreCards({ scores }: { scores: TwinScores }) {
         metricsHint="Exercise & Sleep"
         targetRange="70–100 Target"
         icon="bolt"
-        colorClass="text-cyan-400"
-        bgClass="bg-cyan-500/15 border-cyan-500/30"
-        badgeClass="bg-cyan-500/15 text-cyan-400 border-cyan-500/30"
-        barGradient="bg-gradient-to-r from-cyan-400 to-indigo-500"
+        colorClass="text-lime-300"
+        bgClass="bg-lime-400/15 border-lime-400/30"
+        badgeClass="bg-lime-400/15 text-lime-300 border-lime-400/30"
+        barGradient="bg-gradient-to-r from-lime-400 to-teal-400"
       />
       <SubCard
         label="Nutrition"
@@ -99,10 +99,10 @@ export default function ScoreCards({ scores }: { scores: TwinScores }) {
         metricsHint="Diet Quality"
         targetRange="75–100 Target"
         icon="restaurant"
-        colorClass="text-violet-400"
-        bgClass="bg-violet-500/15 border-violet-500/30"
-        badgeClass="bg-violet-500/15 text-violet-400 border-violet-500/30"
-        barGradient="bg-gradient-to-r from-violet-500 to-fuchsia-500"
+        colorClass="text-emerald-400"
+        bgClass="bg-emerald-500/15 border-emerald-500/30"
+        badgeClass="bg-emerald-500/15 text-emerald-400 border-emerald-500/30"
+        barGradient="bg-gradient-to-r from-emerald-500 to-lime-400"
       />
     </div>
   );

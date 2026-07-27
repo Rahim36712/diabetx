@@ -80,16 +80,16 @@ export default function SimulationPanel({
   }
 
   return (
-    <div className="glass-card rounded-2xl p-6 space-y-6 border border-white/10 shadow-2xl relative">
+    <div className="glass-card rounded-2xl p-6 space-y-6 border border-white/10 shadow-2xl relative font-sans">
       {/* Header */}
       <div className="flex items-center justify-between border-b border-white/10 pb-4">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl bg-gradient-to-r from-cyan-500 to-violet-600 flex items-center justify-center text-slate-950 shadow-lg shadow-cyan-500/20">
+          <div className="w-10 h-10 rounded-xl bg-gradient-to-r from-lime-500 to-emerald-600 flex items-center justify-center text-[#060B08] shadow-lg shadow-lime-500/20">
             <span className="material-symbols-outlined font-bold text-xl">insights</span>
           </div>
           <div>
-            <h2 className="font-display font-bold text-slate-100">What-If Digital Twin Simulator</h2>
-            <p className="text-xs text-slate-400 font-medium">Real-time lifestyle impact projection</p>
+            <h2 className="font-display font-bold text-white">What-If Digital Twin Simulator</h2>
+            <p className="text-xs text-slate-300 font-medium">Real-time lifestyle impact projection</p>
           </div>
         </div>
 
@@ -98,7 +98,7 @@ export default function SimulationPanel({
           <button
             type="button"
             onClick={handleReset}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-cyan-400 border border-cyan-500/30 font-mono text-xs font-bold transition-all shadow-sm active:scale-95"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-lime-500/10 hover:bg-lime-500/20 text-lime-400 border border-lime-500/30 font-mono text-xs font-bold transition-all shadow-sm active:scale-95 cursor-pointer"
             title="Reset all sliders to baseline"
           >
             <span className="material-symbols-outlined text-sm">restart_alt</span>
@@ -152,21 +152,21 @@ export default function SimulationPanel({
 
       {/* Real-time Sub-Score Delta Badges */}
       <div className="space-y-3 pt-2 border-t border-white/10">
-        <h4 className="text-[11px] font-mono font-bold text-slate-400 uppercase tracking-wider flex items-center justify-between">
+        <h4 className="text-[11px] font-mono font-bold text-slate-300 uppercase tracking-wider flex items-center justify-between">
           <span>Projected Score Impact</span>
-          <span className="text-cyan-400">Baseline vs. Sim</span>
+          <span className="text-lime-400">Baseline vs. Sim</span>
         </h4>
 
         {/* Composite Score Highlight Box */}
-        <div className="bg-[#0A0E1A]/90 border border-cyan-500/30 rounded-xl p-4 flex items-center justify-between shadow-lg">
+        <div className="bg-[#060B08]/90 border border-lime-500/30 rounded-xl p-4 flex items-center justify-between shadow-lg">
           <div>
-            <span className="text-xs font-mono font-bold text-cyan-400 uppercase tracking-wider block">
+            <span className="text-xs font-mono font-bold text-lime-400 uppercase tracking-wider block">
               Composite Twin Score
             </span>
             <div className="flex items-baseline gap-2 mt-0.5">
               <span className="text-sm font-mono text-slate-400">{baseScores.composite}</span>
               <span className="text-slate-500 text-xs">→</span>
-              <span className="text-2xl font-display font-extrabold text-slate-100">
+              <span className="text-2xl font-display font-extrabold text-white">
                 {simScores.composite}
               </span>
             </div>
@@ -197,15 +197,15 @@ export default function SimulationPanel({
         </div>
 
         {/* Est. HbA1c Metric */}
-        <div className="bg-[#0A0E1A]/60 border border-white/10 rounded-xl p-3 flex items-center justify-between">
+        <div className="bg-[#060B08]/60 border border-white/10 rounded-xl p-3 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <span className="material-symbols-outlined text-violet-400 text-sm">vital_signs</span>
-            <span className="text-xs font-mono font-bold text-slate-300">Est. HbA1c Level</span>
+            <span className="material-symbols-outlined text-emerald-400 text-sm">vital_signs</span>
+            <span className="text-xs font-mono font-bold text-slate-200">Est. HbA1c Level</span>
           </div>
           <div className="flex items-baseline gap-2">
             <span className="text-xs font-mono text-slate-400">{baseEntry.hba1cPercent.toFixed(1)}%</span>
             <span className="text-slate-500 text-xs">→</span>
-            <span className="text-sm font-display font-bold text-slate-100">
+            <span className="text-sm font-display font-bold text-white">
               {simulatedEntry.hba1cPercent.toFixed(1)}%
             </span>
             <HbA1cDeltaBadge delta={simulatedEntry.hba1cPercent - baseEntry.hba1cPercent} />
@@ -235,10 +235,10 @@ function Slider({
 }) {
   const formattedValue = `${value > 0 ? "+" : ""}${value} ${unit}`;
   return (
-    <div className="space-y-1.5">
+    <div className="space-y-1.5 font-sans">
       <div className="flex justify-between items-center text-xs font-mono font-semibold">
-        <span className="text-slate-300">{label}</span>
-        <span className="text-cyan-400 font-bold px-2 py-0.5 rounded-md bg-cyan-500/10 border border-cyan-500/20">
+        <span className="text-slate-200">{label}</span>
+        <span className="text-lime-400 font-bold px-2 py-0.5 rounded-md bg-lime-500/10 border border-lime-500/20">
           {formattedValue}
         </span>
       </div>
@@ -249,7 +249,7 @@ function Slider({
         step={step}
         value={value}
         onChange={(e) => onChange(parseFloat(e.target.value))}
-        className="w-full accent-cyan-400 slider-thumb cursor-pointer"
+        className="w-full accent-lime-400 slider-thumb cursor-pointer"
       />
     </div>
   );
@@ -267,15 +267,15 @@ function SubScoreComparison({
   delta: number;
 }) {
   return (
-    <div className="bg-[#0A0E1A]/80 border border-white/10 rounded-xl p-3 space-y-1">
-      <div className="text-[10px] font-mono text-slate-400 font-bold uppercase tracking-wider">
+    <div className="bg-[#060B08]/80 border border-white/10 rounded-xl p-3 space-y-1 font-sans">
+      <div className="text-[10px] font-mono text-slate-300 font-bold uppercase tracking-wider">
         {label}
       </div>
       <div className="flex items-baseline justify-between">
         <div className="flex items-baseline gap-1.5">
           <span className="text-xs text-slate-400 font-mono">{before}</span>
           <span className="text-slate-500 text-xs">→</span>
-          <span className="text-sm font-display font-bold text-slate-100">{after}</span>
+          <span className="text-sm font-display font-bold text-white">{after}</span>
         </div>
         <DeltaBadge delta={delta} isScore />
       </div>
@@ -286,7 +286,7 @@ function SubScoreComparison({
 function DeltaBadge({ delta, isScore }: { delta: number; isScore?: boolean }) {
   if (delta === 0) {
     return (
-      <span className="px-2 py-0.5 rounded-full text-[11px] font-mono font-bold bg-slate-800 text-slate-400 border border-white/10">
+      <span className="px-2 py-0.5 rounded-full text-[11px] font-mono font-bold bg-slate-800 text-slate-300 border border-white/10">
         0
       </span>
     );
@@ -294,7 +294,7 @@ function DeltaBadge({ delta, isScore }: { delta: number; isScore?: boolean }) {
 
   const isPositive = delta > 0;
   const badgeStyle = isPositive
-    ? "bg-emerald-500/15 text-emerald-400 border-emerald-500/30"
+    ? "bg-lime-500/15 text-lime-400 border-lime-500/30"
     : "bg-rose-500/15 text-rose-400 border-rose-500/30";
 
   return (
@@ -316,7 +316,7 @@ function HbA1cDeltaBadge({ delta }: { delta: number }) {
 
   // Lower HbA1c is better
   const isImproved = delta < 0;
-  const badgeStyle = isImproved ? "text-emerald-400" : "text-rose-400";
+  const badgeStyle = isImproved ? "text-lime-400" : "text-rose-400";
 
   return (
     <span className={`text-xs font-mono font-bold ${badgeStyle}`}>

@@ -32,25 +32,25 @@ export default function DashboardView({
   onSimulationChange,
 }: DashboardViewProps) {
   return (
-    <div className="space-y-8 animate-card">
+    <div className="space-y-8 animate-card font-sans">
       {/* TOP HERO SECTION: Composite Score Ring + Interactive 3D Twin Canvas */}
       <section className="glass-card rounded-3xl p-6 md:p-8 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center border border-white/10 relative overflow-hidden">
-        <div className="ambient-glow-cyan" />
-        <div className="ambient-glow-violet" />
+        <div className="ambient-glow-lime" />
+        <div className="ambient-glow-emerald" />
 
         {/* Left: Score Ring & Quick Summary */}
         <div className="lg:col-span-5 flex flex-col items-center justify-center space-y-6">
           <ScoreRing score={scores.composite} />
           <div className="space-y-2 text-center max-w-sm">
-            <div className="inline-flex items-center gap-2 bg-emerald-500/10 px-3 py-1 rounded-full border border-emerald-500/30">
-              <span className="material-symbols-filled text-emerald-400 text-sm">
+            <div className="inline-flex items-center gap-2 bg-lime-500/15 px-3 py-1 rounded-full border border-lime-500/30">
+              <span className="material-symbols-filled text-lime-400 text-sm">
                 verified
               </span>
-              <span className="text-[11px] font-mono font-bold uppercase tracking-wider text-emerald-400">
+              <span className="text-[11px] font-mono font-bold uppercase tracking-wider text-lime-300">
                 Twin Health Index
               </span>
             </div>
-            <p className="text-xs md:text-sm text-[#dee2f6] font-semibold leading-relaxed">
+            <p className="text-xs md:text-sm text-slate-200 font-semibold leading-relaxed">
               {explainScores(latest, scores)}
             </p>
           </div>
@@ -58,7 +58,7 @@ export default function DashboardView({
 
         {/* Right: Interactive 3D Twin Canvas & Sub-Score Cards */}
         <div className="lg:col-span-7 space-y-6">
-          <div className="bg-[#0A0E1A]/60 rounded-2xl p-4 border border-white/10 relative">
+          <div className="bg-[#060B08]/60 rounded-2xl p-4 border border-white/10 relative">
             <ThreeDigitalTwinCanvas score={scores.composite} className="w-full h-72" />
           </div>
           <ScoreCards scores={scores} />

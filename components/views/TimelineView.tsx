@@ -97,28 +97,28 @@ export default function TimelineView({ entries, latest }: TimelineViewProps) {
   }, [filteredEntries]);
 
   return (
-    <div className="space-y-6 animate-card">
+    <div className="space-y-6 animate-card font-sans">
       {/* Header Bar */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <h1 className="font-display text-2xl md:text-3xl font-bold text-slate-100 tracking-tight">
+          <h1 className="font-display text-2xl md:text-3xl font-bold text-white tracking-tight">
             Timeline Analytics
           </h1>
-          <p className="text-xs md:text-sm text-slate-400 font-medium">
+          <p className="text-xs md:text-sm text-slate-300 font-medium">
             Patient Overview | 30 Days (Oct 1 - Oct 30, 2023)
           </p>
         </div>
 
         {/* Timeframe Filter Toggle */}
-        <div className="flex items-center gap-1.5 bg-[#0D1322] p-1.5 rounded-xl border border-white/10 self-start md:self-auto">
+        <div className="flex items-center gap-1.5 bg-[#060B08] p-1.5 rounded-xl border border-white/10 self-start md:self-auto">
           {(["7D", "14D", "30D", "90D"] as DateFilter[]).map((filter) => (
             <button
               key={filter}
               onClick={() => setDateFilter(filter)}
               className={`px-3.5 py-1.5 rounded-lg text-xs font-mono font-bold transition-all cursor-pointer ${
                 dateFilter === filter
-                  ? "bg-cyan-500/20 text-cyan-400 border border-cyan-500/40 shadow-lg shadow-cyan-500/10"
-                  : "text-slate-400 hover:text-slate-200 hover:bg-white/5"
+                  ? "bg-lime-500/20 text-lime-400 border border-lime-500/40 shadow-lg shadow-lime-500/10"
+                  : "text-slate-400 hover:text-white hover:bg-white/5"
               }`}
             >
               {filter}
@@ -130,20 +130,20 @@ export default function TimelineView({ entries, latest }: TimelineViewProps) {
       {/* Top 4 Stat Summary Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {/* Glucose */}
-        <div className="glass-card rounded-2xl p-5 border border-cyan-500/20 bg-gradient-to-br from-cyan-950/20 to-[#0A0E1A] flex items-center justify-between shadow-xl">
+        <div className="glass-card rounded-2xl p-5 border border-lime-500/20 bg-gradient-to-br from-lime-950/20 to-[#060B08] flex items-center justify-between shadow-xl">
           <div className="flex items-center gap-3.5">
-            <div className="w-11 h-11 rounded-xl bg-cyan-500/20 border border-cyan-500/30 flex items-center justify-center text-cyan-400 shadow-md shadow-cyan-500/10">
+            <div className="w-11 h-11 rounded-xl bg-lime-500/20 border border-lime-500/30 flex items-center justify-center text-lime-400 shadow-md shadow-lime-500/10">
               <span className="material-symbols-outlined text-2xl">water_drop</span>
             </div>
             <div>
-              <span className="text-[11px] font-mono text-slate-400 block font-medium">
+              <span className="text-[11px] font-mono text-slate-300 block font-medium">
                 Glucose (Average)
               </span>
               <div className="flex items-baseline gap-2">
-                <span className="font-display text-2xl font-bold text-slate-100">
+                <span className="font-display text-2xl font-bold text-white">
                   {stats.avgGlucose} <span className="text-xs font-normal text-slate-400">mg/dL</span>
                 </span>
-                <span className="text-[11px] font-mono font-semibold text-cyan-400 flex items-center">
+                <span className="text-[11px] font-mono font-semibold text-lime-400 flex items-center">
                   ↘ {stats.glucoseTrend}
                 </span>
               </div>
@@ -152,20 +152,20 @@ export default function TimelineView({ entries, latest }: TimelineViewProps) {
         </div>
 
         {/* HbA1c */}
-        <div className="glass-card rounded-2xl p-5 border border-purple-500/20 bg-gradient-to-br from-purple-950/20 to-[#0A0E1A] flex items-center justify-between shadow-xl">
+        <div className="glass-card rounded-2xl p-5 border border-emerald-500/20 bg-gradient-to-br from-emerald-950/20 to-[#060B08] flex items-center justify-between shadow-xl">
           <div className="flex items-center gap-3.5">
-            <div className="w-11 h-11 rounded-xl bg-purple-500/20 border border-purple-500/30 flex items-center justify-center text-purple-400 shadow-md shadow-purple-500/10">
+            <div className="w-11 h-11 rounded-xl bg-emerald-500/20 border border-emerald-500/30 flex items-center justify-center text-emerald-400 shadow-md shadow-emerald-500/10">
               <span className="material-symbols-outlined text-2xl">vital_signs</span>
             </div>
             <div>
-              <span className="text-[11px] font-mono text-slate-400 block font-medium">
+              <span className="text-[11px] font-mono text-slate-300 block font-medium">
                 HbA1c (Estimated)
               </span>
               <div className="flex items-baseline gap-2">
-                <span className="font-display text-2xl font-bold text-slate-100">
+                <span className="font-display text-2xl font-bold text-white">
                   {stats.hba1c}%
                 </span>
-                <span className="text-[11px] font-mono font-semibold text-purple-400 flex items-center">
+                <span className="text-[11px] font-mono font-semibold text-emerald-400 flex items-center">
                   ↗ {stats.hba1cTrend}
                 </span>
               </div>
@@ -174,20 +174,20 @@ export default function TimelineView({ entries, latest }: TimelineViewProps) {
         </div>
 
         {/* Exercise */}
-        <div className="glass-card rounded-2xl p-5 border border-emerald-500/20 bg-gradient-to-br from-emerald-950/20 to-[#0A0E1A] flex items-center justify-between shadow-xl">
+        <div className="glass-card rounded-2xl p-5 border border-lime-400/20 bg-gradient-to-br from-lime-900/20 to-[#060B08] flex items-center justify-between shadow-xl">
           <div className="flex items-center gap-3.5">
-            <div className="w-11 h-11 rounded-xl bg-emerald-500/20 border border-emerald-500/30 flex items-center justify-center text-emerald-400 shadow-md shadow-emerald-500/10">
+            <div className="w-11 h-11 rounded-xl bg-lime-400/20 border border-lime-400/30 flex items-center justify-center text-lime-300 shadow-md shadow-lime-400/10">
               <span className="material-symbols-outlined text-2xl">directions_run</span>
             </div>
             <div>
-              <span className="text-[11px] font-mono text-slate-400 block font-medium">
+              <span className="text-[11px] font-mono text-slate-300 block font-medium">
                 Exercise (Avg/Day)
               </span>
               <div className="flex items-baseline gap-2">
-                <span className="font-display text-2xl font-bold text-slate-100">
+                <span className="font-display text-2xl font-bold text-white">
                   {stats.avgExercise} <span className="text-xs font-normal text-slate-400">Min</span>
                 </span>
-                <span className="text-[11px] font-mono font-semibold text-emerald-400 flex items-center">
+                <span className="text-[11px] font-mono font-semibold text-lime-300 flex items-center">
                   ↗ {stats.exerciseTrend}
                 </span>
               </div>
@@ -196,17 +196,17 @@ export default function TimelineView({ entries, latest }: TimelineViewProps) {
         </div>
 
         {/* Sleep */}
-        <div className="glass-card rounded-2xl p-5 border border-amber-500/20 bg-gradient-to-br from-amber-950/20 to-[#0A0E1A] flex items-center justify-between shadow-xl">
+        <div className="glass-card rounded-2xl p-5 border border-amber-500/20 bg-gradient-to-br from-amber-950/20 to-[#060B08] flex items-center justify-between shadow-xl">
           <div className="flex items-center gap-3.5">
             <div className="w-11 h-11 rounded-xl bg-amber-500/20 border border-amber-500/30 flex items-center justify-center text-amber-400 shadow-md shadow-amber-500/10">
               <span className="material-symbols-outlined text-2xl">bedtime</span>
             </div>
             <div>
-              <span className="text-[11px] font-mono text-slate-400 block font-medium">
+              <span className="text-[11px] font-mono text-slate-300 block font-medium">
                 Sleep (Avg/Night)
               </span>
               <div className="flex items-baseline gap-2">
-                <span className="font-display text-2xl font-bold text-slate-100">
+                <span className="font-display text-2xl font-bold text-white">
                   {stats.avgSleep} <span className="text-xs font-normal text-slate-400">Hr</span>
                 </span>
                 <span className="text-[11px] font-mono font-semibold text-amber-400 flex items-center">
@@ -219,27 +219,27 @@ export default function TimelineView({ entries, latest }: TimelineViewProps) {
       </div>
 
       {/* Main Dual-Axis Health Trends Chart Card */}
-      <div className="glass-card rounded-3xl p-6 border border-white/10 space-y-6 shadow-2xl relative overflow-hidden bg-[#0A0E1A]/90">
+      <div className="glass-card rounded-3xl p-6 border border-white/10 space-y-6 shadow-2xl relative overflow-hidden bg-[#060B08]/90">
         {/* Header and Legend */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-white/10 pb-4">
           <div>
-            <h3 className="font-display font-bold text-slate-100 text-lg">
+            <h3 className="font-display font-bold text-white text-lg">
               Health Trends Over 30 Days
             </h3>
           </div>
 
           {/* Color-coded legend dots */}
           <div className="flex flex-wrap items-center gap-4 text-xs font-mono font-semibold">
-            <span className="flex items-center gap-1.5 text-cyan-400">
-              <span className="w-2.5 h-2.5 rounded-full bg-cyan-400 shadow-sm shadow-cyan-400" />
+            <span className="flex items-center gap-1.5 text-lime-400">
+              <span className="w-2.5 h-2.5 rounded-full bg-lime-400 shadow-sm shadow-lime-400" />
               Glucose
-            </span>
-            <span className="flex items-center gap-1.5 text-purple-400">
-              <span className="w-2.5 h-2.5 rounded-full bg-purple-400 shadow-sm shadow-purple-400" />
-              HbA1c
             </span>
             <span className="flex items-center gap-1.5 text-emerald-400">
               <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 shadow-sm shadow-emerald-400" />
+              HbA1c
+            </span>
+            <span className="flex items-center gap-1.5 text-lime-300">
+              <span className="w-2.5 h-2.5 rounded-full bg-lime-300 shadow-sm shadow-lime-300" />
               Exercise
             </span>
             <span className="flex items-center gap-1.5 text-amber-400">
@@ -298,30 +298,30 @@ export default function TimelineView({ entries, latest }: TimelineViewProps) {
                 type="monotone"
                 dataKey="glucose"
                 name="Glucose"
-                stroke="#22D3EE"
+                stroke="#84CC16"
                 strokeWidth={2.5}
-                dot={{ fill: "#22D3EE", r: 4, stroke: "#0A0E1A", strokeWidth: 2 }}
-                activeDot={{ r: 6, fill: "#38BDF8" }}
+                dot={{ fill: "#84CC16", r: 4, stroke: "#060B08", strokeWidth: 2 }}
+                activeDot={{ r: 6, fill: "#A3E635" }}
               />
               <Line
                 yAxisId="right"
                 type="monotone"
                 dataKey="hba1c"
                 name="HbA1c"
-                stroke="#C084FC"
+                stroke="#10B981"
                 strokeWidth={2.5}
-                dot={{ fill: "#C084FC", r: 4, stroke: "#0A0E1A", strokeWidth: 2 }}
-                activeDot={{ r: 6, fill: "#E9D5FF" }}
+                dot={{ fill: "#10B981", r: 4, stroke: "#060B08", strokeWidth: 2 }}
+                activeDot={{ r: 6, fill: "#34D399" }}
               />
               <Line
                 yAxisId="right"
                 type="monotone"
                 dataKey="exercise"
                 name="Exercise"
-                stroke="#34D399"
+                stroke="#BEF264"
                 strokeWidth={2.5}
-                dot={{ fill: "#34D399", r: 4, stroke: "#0A0E1A", strokeWidth: 2 }}
-                activeDot={{ r: 6, fill: "#6EE7B7" }}
+                dot={{ fill: "#BEF264", r: 4, stroke: "#060B08", strokeWidth: 2 }}
+                activeDot={{ r: 6, fill: "#D9F99D" }}
               />
               <Line
                 yAxisId="right"
@@ -330,7 +330,7 @@ export default function TimelineView({ entries, latest }: TimelineViewProps) {
                 name="Sleep"
                 stroke="#FBBF24"
                 strokeWidth={2.5}
-                dot={{ fill: "#FBBF24", r: 4, stroke: "#0A0E1A", strokeWidth: 2 }}
+                dot={{ fill: "#FBBF24", r: 4, stroke: "#060B08", strokeWidth: 2 }}
                 activeDot={{ r: 6, fill: "#FDE68A" }}
               />
             </LineChart>
@@ -340,7 +340,7 @@ export default function TimelineView({ entries, latest }: TimelineViewProps) {
 
       {/* Timeline History Table */}
       <div className="glass-card rounded-3xl p-6 border border-white/10 space-y-4 shadow-xl">
-        <h3 className="font-display font-bold text-slate-100 text-base">
+        <h3 className="font-display font-bold text-white text-base">
           Timeline History Table
         </h3>
 
@@ -363,23 +363,23 @@ export default function TimelineView({ entries, latest }: TimelineViewProps) {
                 });
                 return (
                   <tr key={e.id} className="hover:bg-white/5 transition-colors">
-                    <td className="py-3 text-slate-300 flex items-center gap-2">
-                      <span className="material-symbols-outlined text-slate-500 text-sm">
+                    <td className="py-3 text-slate-200 flex items-center gap-2">
+                      <span className="material-symbols-outlined text-slate-400 text-sm">
                         calendar_today
                       </span>
                       {dateStr}
                     </td>
-                    <td className="py-3 text-cyan-400 font-semibold">
+                    <td className="py-3 text-lime-400 font-semibold">
                       <span className="inline-flex items-center gap-1">
                         💧 {e.fastingGlucoseMgDl} mg/dL
                       </span>
                     </td>
-                    <td className="py-3 text-purple-400 font-semibold">
+                    <td className="py-3 text-emerald-400 font-semibold">
                       <span className="inline-flex items-center gap-1">
                         🩺 {e.hba1cPercent}%
                       </span>
                     </td>
-                    <td className="py-3 text-emerald-400 font-semibold">
+                    <td className="py-3 text-lime-300 font-semibold">
                       <span className="inline-flex items-center gap-1">
                         🏃 {Math.round(e.exerciseMinutesPerWeek / 7)} min/day
                       </span>
@@ -403,10 +403,10 @@ export default function TimelineView({ entries, latest }: TimelineViewProps) {
 function TimelineCustomTooltip({ active, payload, label }: any) {
   if (active && payload && payload.length) {
     return (
-      <div className="bg-[#0A0E1A]/95 backdrop-blur-xl border border-cyan-500/30 rounded-xl p-3.5 shadow-2xl space-y-2 text-xs">
-        <div className="font-mono text-[11px] font-bold text-slate-300 border-b border-white/10 pb-1 flex items-center justify-between gap-4">
+      <div className="bg-[#060B08]/95 backdrop-blur-xl border border-lime-500/30 rounded-xl p-3.5 shadow-2xl space-y-2 text-xs font-sans">
+        <div className="font-mono text-[11px] font-bold text-slate-200 border-b border-white/10 pb-1 flex items-center justify-between gap-4">
           <span>{label}</span>
-          <span className="text-[10px] text-cyan-400 font-semibold uppercase tracking-wider">
+          <span className="text-[10px] text-lime-400 font-semibold uppercase tracking-wider">
             Snapshot
           </span>
         </div>
@@ -416,7 +416,7 @@ function TimelineCustomTooltip({ active, payload, label }: any) {
               <span className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: item.color }} />
               {item.name}:
             </span>
-            <span className="font-bold text-slate-100">
+            <span className="font-bold text-white">
               {item.value}{" "}
               {item.name === "HbA1c"
                 ? "%"

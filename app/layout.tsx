@@ -36,7 +36,7 @@ export default function RootLayout({
           rel="stylesheet"
         />
       </head>
-      <body className="bg-[#0A0E1A] text-[#dee2f6] min-h-screen antialiased font-sans selection:bg-cyan-500/30 relative">
+      <body className="bg-[#060B08] text-white min-h-screen antialiased font-sans selection:bg-lime-500/30 relative">
         <NavProvider>
           <ShaderBackground />
           <TopNavBar />

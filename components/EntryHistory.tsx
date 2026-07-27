@@ -14,13 +14,13 @@ export default function EntryHistory({
   const reversed = [...entries].reverse();
 
   return (
-    <div className="glass-card rounded-2xl p-6 space-y-4 border border-white/10">
+    <div className="glass-card rounded-2xl p-6 space-y-4 border border-white/10 font-sans">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <span className="material-symbols-outlined text-[#22D3EE]">history</span>
-          <h3 className="font-display font-bold text-[#dee2f6]">Logged Entries</h3>
+          <span className="material-symbols-outlined text-lime-400">history</span>
+          <h3 className="font-display font-bold text-white">Logged Entries</h3>
         </div>
-        <span className="font-mono text-xs font-semibold text-[#94a3b8]">{entries.length} recorded</span>
+        <span className="font-mono text-xs font-semibold text-slate-300">{entries.length} recorded</span>
       </div>
 
       <div className="space-y-2 max-h-64 overflow-y-auto no-scrollbar">
@@ -29,10 +29,10 @@ export default function EntryHistory({
           return (
             <div
               key={entry.id}
-              className="flex items-center justify-between bg-[#0A0E1A]/80 border border-white/10 rounded-xl px-4 py-3 hover:border-[#22D3EE]/40 transition-colors"
+              className="flex items-center justify-between bg-[#060B08]/80 border border-white/10 rounded-xl px-4 py-3 hover:border-lime-400/40 transition-colors"
             >
               <div className="flex items-center gap-3">
-                <span className="font-mono text-xs font-semibold text-[#94a3b8]">
+                <span className="font-mono text-xs font-semibold text-slate-400">
                   {new Date(entry.timestamp).toLocaleDateString(undefined, {
                     month: "short",
                     day: "numeric",
@@ -40,7 +40,7 @@ export default function EntryHistory({
                     minute: "2-digit",
                   })}
                 </span>
-                <div className="text-xs text-[#dee2f6] font-medium hidden sm:flex gap-3">
+                <div className="text-xs text-white font-medium hidden sm:flex gap-3">
                   <span>{entry.fastingGlucoseMgDl} mg/dL</span>
                   <span>{entry.hba1cPercent}% A1c</span>
                   <span>{entry.exerciseMinutesPerWeek} min/wk</span>
@@ -48,12 +48,12 @@ export default function EntryHistory({
               </div>
 
               <div className="flex items-center gap-3">
-                <span className="font-display text-xs font-bold px-2.5 py-1 rounded-full bg-[#22D3EE]/15 border border-[#22D3EE]/30 text-[#22D3EE]">
+                <span className="font-display text-xs font-bold px-2.5 py-1 rounded-full bg-lime-500/15 border border-lime-500/30 text-lime-400">
                   Score: {score}
                 </span>
                 <button
                   onClick={() => onDelete(entry.id)}
-                  className="p-1 rounded-lg hover:bg-red-500/15 text-[#94a3b8] hover:text-red-400 transition-colors"
+                  className="p-1 rounded-lg hover:bg-red-500/15 text-slate-400 hover:text-rose-400 transition-colors cursor-pointer"
                   title="Delete log"
                   aria-label="Delete entry"
                 >

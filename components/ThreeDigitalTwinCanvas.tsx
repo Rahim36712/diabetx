@@ -38,39 +38,39 @@ export default function ThreeDigitalTwinCanvas({
     const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
     scene.add(ambientLight);
 
-    const cyanPointLight = new THREE.PointLight(0x22d3ee, 3, 10);
-    cyanPointLight.position.set(2, 2, 2);
-    scene.add(cyanPointLight);
+    const limePointLight = new THREE.PointLight(0x84cc16, 3, 10);
+    limePointLight.position.set(2, 2, 2);
+    scene.add(limePointLight);
 
-    const violetPointLight = new THREE.PointLight(0x8b5cf6, 2.5, 10);
-    violetPointLight.position.set(-2, -1, 2);
-    scene.add(violetPointLight);
+    const emeraldPointLight = new THREE.PointLight(0x10b981, 2.5, 10);
+    emeraldPointLight.position.set(-2, -1, 2);
+    scene.add(emeraldPointLight);
 
     // Parent group for body
     const bodyGroup = new THREE.Group();
 
     // Translucent Material
     const twinColor =
-      score >= 80 ? 0x22d3ee : score >= 60 ? 0xfbbf24 : 0xf87171;
+      score >= 80 ? 0x84cc16 : score >= 60 ? 0xa3e635 : 0xf87171;
 
     const bodyMaterial = new THREE.MeshPhysicalMaterial({
-      color: 0x131826,
+      color: 0x0e1712,
       emissive: twinColor,
-      emissiveIntensity: 0.4,
+      emissiveIntensity: 0.45,
       roughness: 0.2,
       metalness: 0.8,
       clearcoat: 1.0,
       clearcoatRoughness: 0.1,
       transparent: true,
-      opacity: 0.75,
+      opacity: 0.8,
       wireframe: false,
     });
 
     const wireframeMaterial = new THREE.MeshBasicMaterial({
-      color: 0x22d3ee,
+      color: 0xa3e635,
       wireframe: true,
       transparent: true,
-      opacity: 0.25,
+      opacity: 0.3,
     });
 
     // 1. Head
@@ -99,7 +99,7 @@ export default function ThreeDigitalTwinCanvas({
     const coreMat = new THREE.MeshStandardMaterial({
       color: twinColor,
       emissive: twinColor,
-      emissiveIntensity: 1.2,
+      emissiveIntensity: 1.3,
       roughness: 0.1,
     });
     const coreNode = new THREE.Mesh(coreGeo, coreMat);
@@ -133,9 +133,9 @@ export default function ThreeDigitalTwinCanvas({
     // 6. Cybernetic Ring FX around body
     const ringGeo = new THREE.TorusGeometry(0.85, 0.015, 16, 64);
     const ringMat = new THREE.MeshBasicMaterial({
-      color: 0x8b5cf6,
+      color: 0x84cc16,
       transparent: true,
-      opacity: 0.6,
+      opacity: 0.65,
     });
     const cyberRing = new THREE.Mesh(ringGeo, ringMat);
     cyberRing.rotation.x = Math.PI / 2;
@@ -165,10 +165,10 @@ export default function ThreeDigitalTwinCanvas({
     );
 
     const particleMat = new THREE.PointsMaterial({
-      color: 0x22d3ee,
+      color: 0xa3e635,
       size: 0.04,
       transparent: true,
-      opacity: 0.7,
+      opacity: 0.75,
       blending: THREE.AdditiveBlending,
     });
 
@@ -259,13 +259,13 @@ export default function ThreeDigitalTwinCanvas({
   }, [score]);
 
   return (
-    <div className={`relative flex items-center justify-center ${className}`}>
+    <div className={`relative flex items-center justify-center font-sans ${className}`}>
       <div
         ref={mountRef}
         className="w-full h-full min-h-[280px] max-h-[400px] cursor-grab active:cursor-grabbing"
       />
-      <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex items-center gap-2 bg-[#0A0E1A]/80 backdrop-blur-md px-3 py-1 rounded-full border border-cyan-500/30 text-[11px] font-mono font-bold text-cyan-400 pointer-events-none">
-        <span className="w-2 h-2 rounded-full bg-cyan-400 animate-ping" />
+      <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex items-center gap-2 bg-[#060B08]/85 backdrop-blur-md px-3 py-1 rounded-full border border-lime-500/30 text-[11px] font-mono font-bold text-lime-400 pointer-events-none">
+        <span className="w-2 h-2 rounded-full bg-lime-400 animate-ping" />
         3D DIGITAL TWIN SILHOUETTE
       </div>
     </div>

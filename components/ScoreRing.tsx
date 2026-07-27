@@ -19,7 +19,7 @@ export default function ScoreRing({
 
   // Status Badge Logic
   let statusText = "OPTIMAL";
-  let badgeColor = "bg-emerald-500/15 text-emerald-400 border-emerald-500/30";
+  let badgeColor = "bg-lime-500/15 text-lime-400 border-lime-500/30";
   let statusDesc = "Optimal Health Alignment";
 
   if (clampedScore < 60) {
@@ -28,21 +28,21 @@ export default function ScoreRing({
     statusDesc = "Requires Lifestyle Adjustment";
   } else if (clampedScore < 80) {
     statusText = "GOOD";
-    badgeColor = "bg-cyan-500/15 text-cyan-400 border-cyan-500/30";
+    badgeColor = "bg-lime-500/15 text-lime-300 border-lime-500/30";
     statusDesc = "Good Baseline Stability";
   }
 
   return (
-    <div className="relative flex flex-col items-center justify-center">
+    <div className="relative flex flex-col items-center justify-center font-sans">
       {/* Outer ambient pulse glow */}
-      <div className="absolute w-64 h-64 bg-gradient-to-tr from-[#22D3EE]/20 via-[#8B5CF6]/15 to-transparent rounded-full blur-3xl animate-pulse pointer-events-none" />
+      <div className="absolute w-64 h-64 bg-gradient-to-tr from-lime-500/20 via-emerald-500/15 to-transparent rounded-full blur-3xl animate-pulse pointer-events-none" />
 
       <div className="relative" style={{ width: size, height: size }}>
         <svg className="w-full h-full transform -rotate-90 drop-shadow-lg" viewBox="0 0 120 120">
           <defs>
             <linearGradient id="scoreRingGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor="#22D3EE" />
-              <stop offset="100%" stopColor="#8B5CF6" />
+              <stop offset="0%" stopColor="#A3E635" />
+              <stop offset="100%" stopColor="#10B981" />
             </linearGradient>
             <filter id="ringGlowFilter" x="-20%" y="-20%" width="140%" height="140%">
               <feGaussianBlur stdDeviation="2.5" result="blur" />
@@ -78,7 +78,7 @@ export default function ScoreRing({
 
         {/* Central Composite Score Display */}
         <div className="absolute inset-0 flex flex-col items-center justify-center text-center p-2">
-          <span className="font-display text-4xl sm:text-5xl font-extrabold gradient-text tracking-tight">
+          <span className="font-display text-4xl sm:text-5xl font-extrabold text-white tracking-tight">
             {Math.round(clampedScore)}
           </span>
 
@@ -88,13 +88,13 @@ export default function ScoreRing({
             {statusText}
           </span>
 
-          <span className="font-mono text-[10px] text-[#22D3EE] font-semibold tracking-wider uppercase mt-1">
+          <span className="font-mono text-[10px] text-lime-400 font-semibold tracking-wider uppercase mt-1">
             {label}
           </span>
         </div>
       </div>
 
-      <p className="mt-2 text-xs text-[#94a3b8] font-medium text-center">
+      <p className="mt-2 text-xs text-slate-300 font-medium text-center">
         {statusDesc}
       </p>
     </div>

@@ -1,13 +1,37 @@
+# dependencies
 /node_modules
+
+# next.js build output
 /.next/
 /out/
+
+# environment variables (NEVER commit secrets)
 .env*
 .env
+.env.local
 .venv
 *.pem
 *.key
 *.env
+
+# debug logs
 npm-debug.log*
+
+# OS files
 .DS_Store
+Thumbs.db
+
+# build artifacts
 *.tsbuildinfo
 next-env.d.ts
+build_out.txt
+
+# agent artifacts (dev tooling)
+/.agents/
+
+# stitch design assets (not needed in production)
+/stitch_diabetx_ai_digital_twin/
+/stitch_diabetx_digital_twin_dashboard/
+
+# test artifacts
+/tests/

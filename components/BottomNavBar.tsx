@@ -25,7 +25,7 @@ export default function BottomNavBar({
   ];
 
   return (
-    <nav className="md:hidden fixed bottom-0 left-0 w-full z-50 bg-[#060A07]/95 backdrop-blur-2xl border-t border-white/15 px-2 py-2 flex items-center justify-around select-none font-sans">
+    <nav className="md:hidden fixed bottom-0 left-0 w-full z-50 bg-white/95 backdrop-blur-2xl border-t border-slate-200 px-2 py-2 flex items-center justify-around select-none font-sans shadow-lg">
       {navItems.map((item) => {
         const isActive =
           currentTab === item.id ||
@@ -38,13 +38,13 @@ export default function BottomNavBar({
             onClick={() => handleTabChange(item.id)}
             className={`flex flex-col items-center gap-1 px-3 py-1.5 rounded-xl transition-all cursor-pointer ${
               isActive
-                ? "text-lime-300 font-extrabold scale-105"
-                : "text-slate-300 hover:text-white"
+                ? "text-lime-700 font-extrabold scale-105"
+                : "text-slate-500 hover:text-slate-900"
             }`}
           >
             <span
               className={`material-symbols-outlined text-[22px] ${
-                isActive ? "text-lime-400" : "text-slate-300"
+                isActive ? "text-lime-600" : "text-slate-400"
               }`}
             >
               {item.icon}

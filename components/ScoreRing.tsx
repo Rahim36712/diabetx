@@ -19,33 +19,33 @@ export default function ScoreRing({
 
   // Status Badge Logic
   let statusText = "OPTIMAL";
-  let badgeColor = "bg-lime-400/20 text-lime-300 border-lime-400/40";
+  let badgeColor = "bg-lime-500/15 text-lime-800 border-lime-500/30";
   let statusDesc = "Optimal Health Alignment";
 
   if (clampedScore < 60) {
     statusText = "AT RISK";
-    badgeColor = "bg-rose-500/20 text-rose-300 border-rose-500/40";
+    badgeColor = "bg-rose-500/15 text-rose-800 border-rose-500/30";
     statusDesc = "Requires Lifestyle Adjustment";
   } else if (clampedScore < 80) {
     statusText = "GOOD";
-    badgeColor = "bg-lime-400/20 text-lime-300 border-lime-400/40";
+    badgeColor = "bg-lime-500/15 text-lime-800 border-lime-500/30";
     statusDesc = "Good Baseline Stability";
   }
 
   return (
     <div className="relative flex flex-col items-center justify-center font-sans">
       {/* Outer ambient pulse glow */}
-      <div className="absolute w-64 h-64 bg-gradient-to-tr from-lime-500/20 via-emerald-500/15 to-transparent rounded-full blur-3xl animate-pulse pointer-events-none" />
+      <div className="absolute w-64 h-64 bg-gradient-to-tr from-lime-500/15 via-emerald-500/10 to-transparent rounded-full blur-3xl animate-pulse pointer-events-none" />
 
       <div className="relative" style={{ width: size, height: size }}>
-        <svg className="w-full h-full transform -rotate-90 drop-shadow-xl" viewBox="0 0 120 120">
+        <svg className="w-full h-full transform -rotate-90 drop-shadow-md" viewBox="0 0 120 120">
           <defs>
             <linearGradient id="scoreRingGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor="#A3E635" />
+              <stop offset="0%" stopColor="#84CC16" />
               <stop offset="100%" stopColor="#10B981" />
             </linearGradient>
             <filter id="ringGlowFilter" x="-20%" y="-20%" width="140%" height="140%">
-              <feGaussianBlur stdDeviation="2.5" result="blur" />
+              <feGaussianBlur stdDeviation="2.0" result="blur" />
               <feComposite in="SourceGraphic" in2="blur" operator="over" />
             </filter>
           </defs>
@@ -56,7 +56,7 @@ export default function ScoreRing({
             cy="60"
             r={radius}
             fill="transparent"
-            stroke="rgba(255, 255, 255, 0.12)"
+            stroke="#E2E8F0"
             strokeWidth={stroke}
           />
 
@@ -78,7 +78,7 @@ export default function ScoreRing({
 
         {/* Central Composite Score Display */}
         <div className="absolute inset-0 flex flex-col items-center justify-center text-center p-2">
-          <span className="font-display text-4xl sm:text-5xl font-extrabold text-white tracking-tight drop-shadow-md">
+          <span className="font-display text-4xl sm:text-5xl font-extrabold text-slate-900 tracking-tight">
             {Math.round(clampedScore)}
           </span>
 
@@ -88,13 +88,13 @@ export default function ScoreRing({
             {statusText}
           </span>
 
-          <span className="font-mono text-[10px] text-lime-300 font-bold tracking-wider uppercase mt-1">
+          <span className="font-mono text-[10px] text-lime-700 font-bold tracking-wider uppercase mt-1">
             {label}
           </span>
         </div>
       </div>
 
-      <p className="mt-2 text-xs text-slate-200 font-semibold text-center">
+      <p className="mt-2 text-xs text-slate-600 font-bold text-center">
         {statusDesc}
       </p>
     </div>

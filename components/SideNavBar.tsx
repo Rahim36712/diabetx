@@ -27,13 +27,13 @@ export default function SideNavBar({
   ];
 
   return (
-    <aside className="w-64 fixed left-0 top-0 h-screen hidden md:flex flex-col justify-between z-40 bg-[#09120D]/95 backdrop-blur-2xl border-r border-white/15 p-5 select-none font-sans shadow-2xl">
+    <aside className="w-64 fixed left-0 top-0 h-screen hidden md:flex flex-col justify-between z-40 bg-white border-r border-slate-200 p-5 select-none font-sans shadow-lg">
       {/* Top Logo & Identity */}
       <div className="space-y-8">
         <div className="flex items-center gap-3 px-2 py-1">
-          <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-lime-400 to-emerald-500 flex items-center justify-center shadow-lg shadow-lime-500/30 shrink-0 overflow-hidden">
+          <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-lime-500 to-lime-600 flex items-center justify-center shadow-md shadow-lime-500/25 shrink-0 overflow-hidden">
             <svg
-              className="w-6 h-6 text-[#060B08]"
+              className="w-6 h-6 text-white"
               fill="none"
               stroke="currentColor"
               strokeWidth="2.5"
@@ -47,10 +47,10 @@ export default function SideNavBar({
             </svg>
           </div>
           <div className="min-w-0">
-            <h1 className="font-display text-xl font-bold tracking-tight text-white truncate">
-              Diabet<span className="text-lime-400">X</span> AI
+            <h1 className="font-display text-xl font-bold tracking-tight text-slate-900 truncate">
+              Diabet<span className="text-lime-600">X</span> AI
             </h1>
-            <p className="text-[10px] text-lime-300 font-mono font-bold tracking-wide uppercase">
+            <p className="text-[10px] text-lime-700 font-mono font-extrabold tracking-wide uppercase">
               Balanced Twin OS
             </p>
           </div>
@@ -58,7 +58,7 @@ export default function SideNavBar({
 
         {/* Navigation Links */}
         <nav className="space-y-1.5">
-          <div className="text-[10px] font-mono font-extrabold uppercase tracking-wider text-slate-300 px-3 pb-2">
+          <div className="text-[10px] font-mono font-extrabold uppercase tracking-wider text-slate-400 px-3 pb-2">
             Navigation
           </div>
           {navItems.map((item) => {
@@ -71,16 +71,16 @@ export default function SideNavBar({
               <button
                 key={item.id}
                 onClick={() => handleTabChange(item.id)}
-                className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl font-medium text-sm transition-all duration-200 group cursor-pointer ${
+                className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl font-bold text-sm transition-all duration-200 group cursor-pointer ${
                   isActive
-                    ? "bg-lime-400/20 text-lime-300 border border-lime-400/40 shadow-md shadow-lime-500/10 font-bold"
-                    : "text-slate-200 hover:text-white hover:bg-white/10"
+                    ? "bg-lime-500/15 text-lime-800 border border-lime-500/30 shadow-sm"
+                    : "text-slate-600 hover:text-slate-900 hover:bg-slate-100"
                 }`}
               >
                 <div className="flex items-center gap-3 min-w-0">
                   <span
                     className={`material-symbols-outlined text-[20px] transition-colors shrink-0 ${
-                      isActive ? "text-lime-400" : "text-slate-300 group-hover:text-white"
+                      isActive ? "text-lime-600" : "text-slate-400 group-hover:text-slate-700"
                     }`}
                   >
                     {item.icon}
@@ -91,8 +91,8 @@ export default function SideNavBar({
                   <span
                     className={`text-[9px] font-mono px-1.5 py-px rounded-md font-extrabold uppercase leading-none shrink-0 ${
                       isActive
-                        ? "bg-lime-400/30 text-white border border-lime-400/50"
-                        : "bg-white/10 text-slate-300 border border-white/15"
+                        ? "bg-lime-600 text-white shadow-sm"
+                        : "bg-slate-100 text-slate-500 border border-slate-200"
                     }`}
                   >
                     {item.badge}
@@ -105,17 +105,17 @@ export default function SideNavBar({
       </div>
 
       {/* Bottom System Status Panel */}
-      <div className="glass-card rounded-2xl p-4 border border-white/15 space-y-3 bg-white/[0.03]">
+      <div className="glass-card rounded-2xl p-4 border border-slate-200 space-y-2.5 bg-slate-50/80">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <span className="w-2.5 h-2.5 rounded-full bg-lime-400 animate-pulse" />
-            <span className="text-xs font-mono font-bold text-lime-300">
+            <span className="w-2.5 h-2.5 rounded-full bg-lime-500 animate-pulse" />
+            <span className="text-xs font-mono font-extrabold text-lime-800">
               Twin Engine Active
             </span>
           </div>
-          <span className="text-[10px] font-mono text-slate-300 font-bold">v2.4</span>
+          <span className="text-[10px] font-mono text-slate-500 font-bold">v2.4</span>
         </div>
-        <p className="text-[11px] text-slate-200 leading-tight font-medium">
+        <p className="text-[11px] text-slate-600 leading-tight font-medium">
           Real-time cyber-physiological modeling & local AI synthesis.
         </p>
       </div>

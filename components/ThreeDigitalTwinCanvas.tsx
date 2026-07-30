@@ -6,13 +6,27 @@ import * as THREE from "three";
 interface ThreeDigitalTwinCanvasProps {
   score?: number;
   className?: string;
+  cameraPreset?: "front" | "focus" | "top" | "orbit";
+  selectedOrgan?: "all" | "pancreas" | "vascular" | "metabolic";
 }
 
 export default function ThreeDigitalTwinCanvas({
   score = 85,
   className = "",
+  cameraPreset = "front",
+  selectedOrgan = "all",
 }: ThreeDigitalTwinCanvasProps) {
   const mountRef = useRef<HTMLDivElement | null>(null);
+  const cameraPresetRef = useRef(cameraPreset);
+  const selectedOrganRef = useRef(selectedOrgan);
+
+  useEffect(() => {
+    cameraPresetRef.current = cameraPreset;
+  }, [cameraPreset]);
+
+  useEffect(() => {
+    selectedOrganRef.current = selectedOrgan;
+  }, [selectedOrgan]);
 
   useEffect(() => {
     const container = mountRef.current;
@@ -34,42 +48,42 @@ export default function ThreeDigitalTwinCanvas({
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     container.appendChild(renderer.domElement);
 
-    // Lights - Strict Lime Green & Crisp White
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.7);
+    // Lights - Vibrant Lime Green & Bright White
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.85);
     scene.add(ambientLight);
 
-    const limePointLight = new THREE.PointLight(0xa3e635, 3.5, 10);
+    const limePointLight = new THREE.PointLight(0x84cc16, 4.0, 10);
     limePointLight.position.set(2, 2, 2);
     scene.add(limePointLight);
 
-    const whitePointLight = new THREE.PointLight(0xffffff, 2.5, 10);
+    const whitePointLight = new THREE.PointLight(0xffffff, 3.0, 10);
     whitePointLight.position.set(-2, -1, 2);
     scene.add(whitePointLight);
 
     // Parent group for body
     const bodyGroup = new THREE.Group();
 
-    // Translucent Material - Lime Green
-    const twinColor = 0xa3e635;
+    // Material - Lime Green on Light Theme
+    const twinColor = 0x84cc16;
 
     const bodyMaterial = new THREE.MeshPhysicalMaterial({
-      color: 0x0e1712,
+      color: 0x1e293b,
       emissive: twinColor,
-      emissiveIntensity: 0.5,
+      emissiveIntensity: 0.6,
       roughness: 0.2,
-      metalness: 0.8,
+      metalness: 0.7,
       clearcoat: 1.0,
       clearcoatRoughness: 0.1,
       transparent: true,
-      opacity: 0.85,
+      opacity: 0.9,
       wireframe: false,
     });
 
     const wireframeMaterial = new THREE.MeshBasicMaterial({
-      color: 0xa3e635,
+      color: 0x65a30d,
       wireframe: true,
       transparent: true,
-      opacity: 0.35,
+      opacity: 0.45,
     });
 
     // 1. Head
@@ -80,7 +94,7 @@ export default function ThreeDigitalTwinCanvas({
 
     const headWire = new THREE.Mesh(headGeo, wireframeMaterial);
     headWire.position.copy(headMesh.position);
-    headGroupWire(headWire);
+    headWire.scale.set(1.02, 1.02, 1.02);
     bodyGroup.add(headWire);
 
     // 2. Torso
@@ -97,8 +111,8 @@ export default function ThreeDigitalTwinCanvas({
     const coreGeo = new THREE.IcosahedronGeometry(0.18, 2);
     const coreMat = new THREE.MeshStandardMaterial({
       color: 0xffffff,
-      emissive: 0xa3e635,
-      emissiveIntensity: 1.4,
+      emissive: 0x84cc16,
+      emissiveIntensity: 2.0,
       roughness: 0.1,
     });
     const coreNode = new THREE.Mesh(coreGeo, coreMat);
@@ -127,12 +141,12 @@ export default function ThreeDigitalTwinCanvas({
     rightLeg.position.set(0.22, -0.55, 0);
     bodyGroup.add(rightLeg);
 
-    // 6. Cybernetic Ring FX - Lime Green & White
-    const ringGeo = new THREE.TorusGeometry(0.85, 0.015, 16, 64);
+    // 6. Cybernetic Ring FX - Lime Green
+    const ringGeo = new THREE.TorusGeometry(0.85, 0.018, 16, 64);
     const ringMat = new THREE.MeshBasicMaterial({
-      color: 0xa3e635,
+      color: 0x84cc16,
       transparent: true,
-      opacity: 0.7,
+      opacity: 0.8,
     });
     const cyberRing = new THREE.Mesh(ringGeo, ringMat);
     cyberRing.rotation.x = Math.PI / 2;
@@ -141,19 +155,15 @@ export default function ThreeDigitalTwinCanvas({
 
     scene.add(bodyGroup);
 
-    function headGroupWire(w: THREE.Mesh) {
-      w.scale.set(1.02, 1.02, 1.02);
-    }
-
-    // Particle Cloud - Lime Green & White
+    // Particle Cloud - Lime Green
     const particleCount = 120;
     const particleGeo = new THREE.BufferGeometry();
     const particlePositions = new Float32Array(particleCount * 3);
 
     for (let i = 0; i < particleCount; i++) {
-      particlePositions[i * 3] = (Math.random() - 0.5) * 2.2;
-      particlePositions[i * 3 + 1] = (Math.random() - 0.5) * 3.0;
-      particlePositions[i * 3 + 2] = (Math.random() - 0.5) * 2.2;
+      particlePositions[i * 3] = (Math.random() - 0.5) * 2.4;
+      particlePositions[i * 3 + 1] = (Math.random() - 0.5) * 3.2;
+      particlePositions[i * 3 + 2] = (Math.random() - 0.5) * 2.4;
     }
 
     particleGeo.setAttribute(
@@ -162,10 +172,10 @@ export default function ThreeDigitalTwinCanvas({
     );
 
     const particleMat = new THREE.PointsMaterial({
-      color: 0xa3e635,
-      size: 0.04,
+      color: 0x65a30d,
+      size: 0.045,
       transparent: true,
-      opacity: 0.8,
+      opacity: 0.7,
       blending: THREE.AdditiveBlending,
     });
 
@@ -175,8 +185,6 @@ export default function ThreeDigitalTwinCanvas({
     // Mouse Interaction
     let mouseX = 0;
     let mouseY = 0;
-    let targetRotationY = 0;
-    let targetRotationX = 0;
 
     const handleMouseMove = (e: MouseEvent) => {
       const rect = container.getBoundingClientRect();
@@ -200,27 +208,66 @@ export default function ThreeDigitalTwinCanvas({
 
     window.addEventListener("resize", handleResize);
 
+    // Camera preset target positions
+    const presets: Record<string, { x: number; y: number; z: number }> = {
+      front: { x: 0, y: 0.4, z: 4.5 },
+      focus: { x: 0, y: 0.45, z: 2.1 },
+      top: { x: 0, y: 3.2, z: 1.2 },
+      orbit: { x: 0, y: 0.4, z: 4.5 },
+    };
+
     // Animation Loop
     let animId: number;
     let clock = new THREE.Clock();
 
     const animate = () => {
       const elapsedTime = clock.getElapsedTime();
+      const activePreset = cameraPresetRef.current;
+      const activeOrgan = selectedOrganRef.current;
 
-      // Gentle continuous rotation + mouse lerp
-      targetRotationY = mouseX * 0.6;
-      targetRotationX = mouseY * 0.3;
+      // Camera Lerp based on Camera Preset Button
+      let targetCam = presets[activePreset] ?? presets.front;
 
-      bodyGroup.rotation.y +=
-        (targetRotationY + elapsedTime * 0.2 - bodyGroup.rotation.y) * 0.05;
-      bodyGroup.rotation.x += (targetRotationX - bodyGroup.rotation.x) * 0.05;
+      if (activePreset === "orbit") {
+        const orbitRadius = 4.2;
+        targetCam = {
+          x: Math.sin(elapsedTime * 0.5) * orbitRadius,
+          y: 0.8 + Math.cos(elapsedTime * 0.3) * 0.4,
+          z: Math.cos(elapsedTime * 0.5) * orbitRadius,
+        };
+      } else {
+        // Add subtle mouse look lerp
+        targetCam.x += mouseX * 0.4;
+        targetCam.y += -mouseY * 0.2;
+      }
 
-      // Pulse Core Node & Cyber Ring
-      const pulseScale = 1 + Math.sin(elapsedTime * 3) * 0.08;
-      coreNode.scale.set(pulseScale, pulseScale, pulseScale);
-      cyberRing.rotation.z = elapsedTime * 0.5;
+      camera.position.x += (targetCam.x - camera.position.x) * 0.08;
+      camera.position.y += (targetCam.y - camera.position.y) * 0.08;
+      camera.position.z += (targetCam.z - camera.position.z) * 0.08;
+      camera.lookAt(0, 0.4, 0);
 
-      // Particles orbit
+      // Organ System Mesh Highlighting
+      if (activeOrgan === "pancreas") {
+        coreMat.emissiveIntensity = 3.5 + Math.sin(elapsedTime * 6) * 1.2;
+        coreNode.scale.set(1.4, 1.4, 1.4);
+        cyberRing.scale.set(1.0, 1.0, 1.0);
+      } else if (activeOrgan === "vascular") {
+        coreMat.emissiveIntensity = 1.5;
+        coreNode.scale.set(1.0, 1.0, 1.0);
+        cyberRing.scale.set(1.3, 1.3, 1.3);
+        ringMat.opacity = 1.0;
+      } else if (activeOrgan === "metabolic") {
+        coreMat.emissiveIntensity = 2.5;
+        const pulse = 1.1 + Math.sin(elapsedTime * 4) * 0.1;
+        torsoMesh.scale.set(pulse, pulse, pulse);
+      } else {
+        coreMat.emissiveIntensity = 1.8 + Math.sin(elapsedTime * 3) * 0.4;
+        coreNode.scale.set(1.0, 1.0, 1.0);
+        cyberRing.scale.set(1.0, 1.0, 1.0);
+        torsoMesh.scale.set(1.0, 1.0, 1.0);
+      }
+
+      cyberRing.rotation.z = elapsedTime * 0.6;
       particles.rotation.y = elapsedTime * 0.08;
 
       renderer.render(scene, camera);
@@ -261,8 +308,8 @@ export default function ThreeDigitalTwinCanvas({
         ref={mountRef}
         className="w-full h-full min-h-[280px] max-h-[400px] cursor-grab active:cursor-grabbing"
       />
-      <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex items-center gap-2 bg-[#060A07]/90 backdrop-blur-md px-3 py-1 rounded-full border border-lime-400/40 text-[11px] font-mono font-extrabold text-lime-300 pointer-events-none shadow-md">
-        <span className="w-2 h-2 rounded-full bg-lime-400 animate-ping" />
+      <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex items-center gap-2 bg-white/90 backdrop-blur-md px-3 py-1 rounded-full border border-slate-300 text-[11px] font-mono font-extrabold text-slate-800 pointer-events-none shadow-md">
+        <span className="w-2 h-2 rounded-full bg-lime-500 animate-ping" />
         3D DIGITAL TWIN SILHOUETTE
       </div>
     </div>

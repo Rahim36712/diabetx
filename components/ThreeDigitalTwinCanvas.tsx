@@ -34,35 +34,34 @@ export default function ThreeDigitalTwinCanvas({
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     container.appendChild(renderer.domElement);
 
-    // Lights
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+    // Lights - Strict Lime Green & Crisp White
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.7);
     scene.add(ambientLight);
 
-    const limePointLight = new THREE.PointLight(0x84cc16, 3, 10);
+    const limePointLight = new THREE.PointLight(0xa3e635, 3.5, 10);
     limePointLight.position.set(2, 2, 2);
     scene.add(limePointLight);
 
-    const emeraldPointLight = new THREE.PointLight(0x10b981, 2.5, 10);
-    emeraldPointLight.position.set(-2, -1, 2);
-    scene.add(emeraldPointLight);
+    const whitePointLight = new THREE.PointLight(0xffffff, 2.5, 10);
+    whitePointLight.position.set(-2, -1, 2);
+    scene.add(whitePointLight);
 
     // Parent group for body
     const bodyGroup = new THREE.Group();
 
-    // Translucent Material
-    const twinColor =
-      score >= 80 ? 0x84cc16 : score >= 60 ? 0xa3e635 : 0xf87171;
+    // Translucent Material - Lime Green
+    const twinColor = 0xa3e635;
 
     const bodyMaterial = new THREE.MeshPhysicalMaterial({
       color: 0x0e1712,
       emissive: twinColor,
-      emissiveIntensity: 0.45,
+      emissiveIntensity: 0.5,
       roughness: 0.2,
       metalness: 0.8,
       clearcoat: 1.0,
       clearcoatRoughness: 0.1,
       transparent: true,
-      opacity: 0.8,
+      opacity: 0.85,
       wireframe: false,
     });
 
@@ -70,7 +69,7 @@ export default function ThreeDigitalTwinCanvas({
       color: 0xa3e635,
       wireframe: true,
       transparent: true,
-      opacity: 0.3,
+      opacity: 0.35,
     });
 
     // 1. Head
@@ -94,12 +93,12 @@ export default function ThreeDigitalTwinCanvas({
     torsoWire.position.copy(torsoMesh.position);
     bodyGroup.add(torsoWire);
 
-    // 3. Pancreas / Metabolic Core Node
+    // 3. Pancreas / Metabolic Core Node - White & Lime Glow
     const coreGeo = new THREE.IcosahedronGeometry(0.18, 2);
     const coreMat = new THREE.MeshStandardMaterial({
-      color: twinColor,
-      emissive: twinColor,
-      emissiveIntensity: 1.3,
+      color: 0xffffff,
+      emissive: 0xa3e635,
+      emissiveIntensity: 1.4,
       roughness: 0.1,
     });
     const coreNode = new THREE.Mesh(coreGeo, coreMat);
@@ -107,14 +106,12 @@ export default function ThreeDigitalTwinCanvas({
     bodyGroup.add(coreNode);
 
     // 4. Arms
-    // Left arm
     const armGeo = new THREE.CylinderGeometry(0.1, 0.08, 1.1, 16);
     const leftArm = new THREE.Mesh(armGeo, bodyMaterial);
     leftArm.position.set(-0.58, 0.5, 0);
     leftArm.rotation.z = 0.25;
     bodyGroup.add(leftArm);
 
-    // Right arm
     const rightArm = new THREE.Mesh(armGeo, bodyMaterial);
     rightArm.position.set(0.58, 0.5, 0);
     rightArm.rotation.z = -0.25;
@@ -130,12 +127,12 @@ export default function ThreeDigitalTwinCanvas({
     rightLeg.position.set(0.22, -0.55, 0);
     bodyGroup.add(rightLeg);
 
-    // 6. Cybernetic Ring FX around body
+    // 6. Cybernetic Ring FX - Lime Green & White
     const ringGeo = new THREE.TorusGeometry(0.85, 0.015, 16, 64);
     const ringMat = new THREE.MeshBasicMaterial({
-      color: 0x84cc16,
+      color: 0xa3e635,
       transparent: true,
-      opacity: 0.65,
+      opacity: 0.7,
     });
     const cyberRing = new THREE.Mesh(ringGeo, ringMat);
     cyberRing.rotation.x = Math.PI / 2;
@@ -148,7 +145,7 @@ export default function ThreeDigitalTwinCanvas({
       w.scale.set(1.02, 1.02, 1.02);
     }
 
-    // Particle Cloud around Silhouette
+    // Particle Cloud - Lime Green & White
     const particleCount = 120;
     const particleGeo = new THREE.BufferGeometry();
     const particlePositions = new Float32Array(particleCount * 3);
@@ -168,7 +165,7 @@ export default function ThreeDigitalTwinCanvas({
       color: 0xa3e635,
       size: 0.04,
       transparent: true,
-      opacity: 0.75,
+      opacity: 0.8,
       blending: THREE.AdditiveBlending,
     });
 
@@ -264,7 +261,7 @@ export default function ThreeDigitalTwinCanvas({
         ref={mountRef}
         className="w-full h-full min-h-[280px] max-h-[400px] cursor-grab active:cursor-grabbing"
       />
-      <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex items-center gap-2 bg-[#060B08]/85 backdrop-blur-md px-3 py-1 rounded-full border border-lime-500/30 text-[11px] font-mono font-bold text-lime-400 pointer-events-none">
+      <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex items-center gap-2 bg-[#060A07]/90 backdrop-blur-md px-3 py-1 rounded-full border border-lime-400/40 text-[11px] font-mono font-extrabold text-lime-300 pointer-events-none shadow-md">
         <span className="w-2 h-2 rounded-full bg-lime-400 animate-ping" />
         3D DIGITAL TWIN SILHOUETTE
       </div>

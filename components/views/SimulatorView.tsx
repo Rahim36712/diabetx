@@ -122,7 +122,7 @@ export default function SimulatorView({
   return (
     <div className="space-y-6 animate-card font-sans">
       {/* Header Bar */}
-      <div className="glass-card rounded-2xl p-6 border border-white/10 flex flex-wrap items-center justify-between gap-4">
+      <div className="glass-card rounded-2xl p-6 border border-white/15 flex flex-wrap items-center justify-between gap-4 bg-[#060A07]/90">
         <div className="space-y-1">
           <div className="flex items-center gap-2.5">
             <span className="material-symbols-outlined text-lime-400 text-2xl">
@@ -132,90 +132,92 @@ export default function SimulatorView({
               What-If Lifestyle & Biomarker Simulator
             </h2>
           </div>
-          <p className="text-xs text-slate-300 font-medium">
+          <p className="text-xs text-slate-200 font-medium">
             Test custom lifestyle shifts or select preset scenarios to project health score impacts.
           </p>
         </div>
 
         {actionFeedback && (
-          <span className="px-3.5 py-1.5 rounded-xl bg-lime-500/20 text-lime-300 border border-lime-500/40 text-xs font-mono font-bold animate-fade-in">
-            ✓ {actionFeedback}
+          <span className="text-xs font-mono font-bold text-lime-300 bg-lime-400/20 px-3 py-1.5 rounded-full border border-lime-400/40 animate-pulse shadow-sm">
+            ⚡ {actionFeedback}
           </span>
         )}
       </div>
 
-      {/* Scenario Preset Buttons */}
-      <div className="glass-card rounded-2xl p-5 border border-white/10 space-y-3">
-        <div className="flex items-center justify-between">
-          <span className="text-xs font-mono font-bold text-slate-300 uppercase tracking-wider flex items-center gap-2">
-            <span className="material-symbols-outlined text-lime-400 text-base">auto_awesome</span>
-            Preset Health Scenarios:
-          </span>
-          <span className="text-[11px] font-mono text-slate-400">One-click simulation profiles</span>
-        </div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
-          <button
-            onClick={() => applyPreset("keto")}
-            className="p-3.5 rounded-xl bg-[#060B08]/80 border border-lime-500/30 hover:border-lime-400 hover:bg-lime-500/10 text-left transition-all group cursor-pointer"
-          >
-            <div className="flex items-center justify-between mb-1">
-              <span className="font-display font-bold text-xs text-lime-400">Keto / Low Carb</span>
-              <span className="text-[10px] font-mono text-lime-400 bg-lime-500/20 px-2 py-0.5 rounded-md font-bold">
-                Preset 1
-              </span>
+      {/* Preset Quick Scenarios */}
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        {/* Preset 1: Keto */}
+        <button
+          onClick={() => applyPreset("keto")}
+          className="glass-card p-5 rounded-2xl border border-white/15 hover:border-lime-400/50 bg-[#060A07]/90 text-left transition-all group cursor-pointer space-y-2"
+        >
+          <div className="flex items-center justify-between">
+            <div className="p-2 rounded-xl bg-lime-400/20 text-lime-300 border border-lime-400/40">
+              <span className="material-symbols-outlined text-xl">restaurant</span>
             </div>
-            <p className="text-[11px] text-slate-400 font-mono">
-              Weight -4kg • Diet +2 • Exercise +30m
+            <span className="text-[10px] font-mono text-lime-300 font-bold px-2 py-0.5 rounded-full bg-lime-400/20 border border-lime-400/40">
+              Preset #1
+            </span>
+          </div>
+          <div>
+            <h4 className="font-display font-bold text-sm text-white group-hover:text-lime-300 transition-colors">
+              Low-Carb / Keto Reset
+            </h4>
+            <p className="text-xs text-slate-200 mt-0.5">
+              -4kg Weight, +2 Diet Quality points
             </p>
-          </button>
+          </div>
+        </button>
 
-          <button
-            onClick={() => applyPreset("cardio")}
-            className="p-3.5 rounded-xl bg-[#060B08]/80 border border-lime-400/30 hover:border-lime-300 hover:bg-lime-400/10 text-left transition-all group cursor-pointer"
-          >
-            <div className="flex items-center justify-between mb-1">
-              <span className="font-display font-bold text-xs text-lime-300">Active Cardio Plan</span>
-              <span className="text-[10px] font-mono text-lime-300 bg-lime-400/20 px-2 py-0.5 rounded-md font-bold">
-                Preset 2
-              </span>
+        {/* Preset 2: Cardio */}
+        <button
+          onClick={() => applyPreset("cardio")}
+          className="glass-card p-5 rounded-2xl border border-white/15 hover:border-lime-400/50 bg-[#060A07]/90 text-left transition-all group cursor-pointer space-y-2"
+        >
+          <div className="flex items-center justify-between">
+            <div className="p-2 rounded-xl bg-lime-400/20 text-lime-400 border border-lime-400/40">
+              <span className="material-symbols-outlined text-xl">directions_run</span>
             </div>
-            <p className="text-[11px] text-slate-400 font-mono">
-              Exercise +120m • Weight -2kg • Sleep +1h
+            <span className="text-[10px] font-mono text-lime-400 font-bold px-2 py-0.5 rounded-full bg-lime-400/20 border border-lime-400/40">
+              Preset #2
+            </span>
+          </div>
+          <div>
+            <h4 className="font-display font-bold text-sm text-white group-hover:text-lime-400 transition-colors">
+              High-Intensity Cardio Boost
+            </h4>
+            <p className="text-xs text-slate-200 mt-0.5">
+              +120 min/wk Exercise, +1h Sleep
             </p>
-          </button>
+          </div>
+        </button>
 
-          <button
-            onClick={() => applyPreset("sleep")}
-            className="p-3.5 rounded-xl bg-[#060B08]/80 border border-emerald-500/30 hover:border-emerald-400 hover:bg-emerald-500/10 text-left transition-all group cursor-pointer"
-          >
-            <div className="flex items-center justify-between mb-1">
-              <span className="font-display font-bold text-xs text-emerald-400">Sleep Recovery</span>
-              <span className="text-[10px] font-mono text-emerald-400 bg-emerald-500/20 px-2 py-0.5 rounded-md font-bold">
-                Preset 3
-              </span>
+        {/* Preset 3: Sleep */}
+        <button
+          onClick={() => applyPreset("sleep")}
+          className="glass-card p-5 rounded-2xl border border-white/15 hover:border-lime-400/50 bg-[#060A07]/90 text-left transition-all group cursor-pointer space-y-2"
+        >
+          <div className="flex items-center justify-between">
+            <div className="p-2 rounded-xl bg-white/20 text-white border border-white/30">
+              <span className="material-symbols-outlined text-xl">bedtime</span>
             </div>
-            <p className="text-[11px] text-slate-400 font-mono">
-              Sleep +2h • Diet +1 • Exercise +30m
+            <span className="text-[10px] font-mono text-white font-bold px-2 py-0.5 rounded-full bg-white/20 border border-white/30">
+              Preset #3
+            </span>
+          </div>
+          <div>
+            <h4 className="font-display font-bold text-sm text-white group-hover:text-white transition-colors">
+              Optimized Sleep Recovery
+            </h4>
+            <p className="text-xs text-slate-200 mt-0.5">
+              +2 hrs Nocturnal Sleep, +30m Exercise
             </p>
-          </button>
-
-          <button
-            onClick={() => applyPreset("reset")}
-            className="p-3.5 rounded-xl bg-[#060B08]/80 border border-white/10 hover:border-slate-300 text-left transition-all group flex flex-col justify-center cursor-pointer"
-          >
-            <div className="flex items-center justify-between">
-              <span className="font-display font-bold text-xs text-slate-200">Reset Sliders</span>
-              <span className="material-symbols-outlined text-slate-400 text-sm">restart_alt</span>
-            </div>
-            <p className="text-[11px] text-slate-400 font-mono mt-1">Restore baseline twin state</p>
-          </button>
-        </div>
+          </div>
+        </button>
       </div>
 
-      {/* Main Grid: Parameter Sliders & Baseline vs Simulated Projection Chart */}
+      {/* Main Grid: Interactive Sliders + Comparative Bar Chart */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
-        {/* Left 6 Cols: Parameter Sliders */}
         <div className="lg:col-span-6">
           <SimulationPanel
             baseEntry={baseEntry}
@@ -223,73 +225,64 @@ export default function SimulatorView({
           />
         </div>
 
-        {/* Right 6 Cols: Baseline vs Simulated Projection Bar Chart */}
-        <div className="lg:col-span-6 glass-card rounded-3xl p-6 border border-white/10 flex flex-col justify-between space-y-6 shadow-2xl relative overflow-hidden">
-          <div className="ambient-glow-lime" />
-
-          <div className="flex items-center justify-between border-b border-white/10 pb-3">
+        <div className="lg:col-span-6 glass-card rounded-3xl p-6 md:p-7 border border-white/15 space-y-5 flex flex-col justify-between bg-[#060A07]/90 shadow-2xl">
+          <div className="flex items-center justify-between border-b border-white/15 pb-4">
             <div>
-              <h3 className="font-display font-bold text-white text-base">
-                Baseline vs. Simulated Sub-Score Projection
+              <h3 className="font-display font-bold text-lg text-white">
+                Baseline vs. Scenario Comparison
               </h3>
-              <p className="text-xs text-slate-400 font-mono">
-                Comparative analysis of target sub-score deltas
+              <p className="text-xs text-slate-200 font-medium mt-0.5">
+                Visualizing sub-score deltas across all 3 domains
               </p>
             </div>
-            {activeSim.isModified && (
-              <span className="px-3 py-1 rounded-full text-xs font-mono font-bold bg-lime-500/15 border border-lime-500/30 text-lime-400">
-                Score Delta: {activeSim.deltas.composite >= 0 ? "+" : ""}
+            <span className="text-xs font-mono font-bold text-lime-300">
+              {activeSim.isModified ? "Modified" : "Baseline"}
+            </span>
+          </div>
+
+          <ResponsiveContainer width="100%" height={280}>
+            <BarChart data={comparisonData} margin={{ top: 15, right: 15, left: -20, bottom: 5 }}>
+              <CartesianGrid stroke="rgba(255, 255, 255, 0.08)" strokeDasharray="4 4" />
+              <XAxis
+                dataKey="metric"
+                stroke="#E2E8F0"
+                fontSize={12}
+                fontWeight={600}
+                tickLine={false}
+              />
+              <YAxis
+                stroke="#E2E8F0"
+                fontSize={12}
+                fontWeight={600}
+                domain={[0, 100]}
+                tickLine={false}
+              />
+              <Tooltip
+                contentStyle={{
+                  backgroundColor: "rgba(6, 10, 7, 0.95)",
+                  borderColor: "rgba(163, 230, 53, 0.4)",
+                  borderRadius: "12px",
+                  color: "#FFFFFF",
+                  fontSize: "12px",
+                  fontFamily: "Comfortaa, cursive, sans-serif",
+                }}
+              />
+              <Legend wrapperStyle={{ fontSize: "12px", fontFamily: "Comfortaa, cursive, sans-serif" }} />
+              <Bar dataKey="Baseline" fill="#FFFFFF" radius={[6, 6, 0, 0]} />
+              <Bar dataKey="Simulated" fill="#A3E635" radius={[6, 6, 0, 0]} />
+            </BarChart>
+          </ResponsiveContainer>
+
+          <div className="bg-[#060A07]/95 p-4 rounded-xl border border-white/15 flex items-center justify-between text-xs font-mono">
+            <span className="text-slate-200 font-semibold">Net Composite Score Shift:</span>
+            <span className="text-sm font-bold text-white">
+              {baseScores.composite} → {activeSim.simScores.composite} (
+              <span className="text-lime-300 font-extrabold">
+                {activeSim.deltas.composite >= 0 ? "+" : ""}
                 {activeSim.deltas.composite.toFixed(1)} pts
               </span>
-            )}
-          </div>
-
-          <div className="w-full h-64">
-            <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={comparisonData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
-                <CartesianGrid stroke="rgba(255, 255, 255, 0.06)" strokeDasharray="4 4" />
-                <XAxis dataKey="metric" stroke="#94A3B8" fontSize={11} />
-                <YAxis stroke="#94A3B8" fontSize={11} domain={[0, 100]} />
-                <Tooltip
-                  contentStyle={{
-                    backgroundColor: "#060B08",
-                    borderColor: "rgba(132, 204, 22, 0.4)",
-                    borderRadius: "12px",
-                    color: "#FFF",
-                  }}
-                />
-                <Legend wrapperStyle={{ fontSize: "11px", paddingTop: "10px" }} />
-                <Bar dataKey="Baseline" fill="#334155" radius={[4, 4, 0, 0]} />
-                <Bar dataKey="Simulated" fill="#84CC16" radius={[4, 4, 0, 0]} />
-              </BarChart>
-            </ResponsiveContainer>
-          </div>
-
-          {/* Goal Action Buttons */}
-          <div className="pt-4 border-t border-white/10 grid grid-cols-1 sm:grid-cols-2 gap-3">
-            <button
-              onClick={() => {
-                setActionFeedback("Saved scenario to your Digital Twin health targets!");
-                setTimeout(() => setActionFeedback(null), 3000);
-              }}
-              className="py-2.5 px-4 rounded-xl bg-gradient-to-r from-lime-400 to-emerald-500 text-[#060B08] font-display font-extrabold text-xs shadow-lg shadow-lime-500/20 active:scale-95 transition-all flex items-center justify-center gap-2 cursor-pointer"
-            >
-              <span className="material-symbols-outlined text-sm">flag</span>
-              <span>Commit Target Plan</span>
-            </button>
-
-            <button
-              onClick={() => {
-                const text = `DiabetX Simulation Report:\nComposite: ${baseScores.composite} -> ${activeSim.simScores.composite}\nEst HbA1c: ${activeSim.simulatedEntry.hba1cPercent.toFixed(1)}%`;
-                navigator.clipboard?.writeText(text);
-                setActionFeedback("Copied simulation brief to clipboard!");
-                setTimeout(() => setActionFeedback(null), 3000);
-              }}
-              className="py-2.5 px-4 rounded-xl bg-white/10 hover:bg-white/15 text-white border border-white/10 font-display font-bold text-xs active:scale-95 transition-all flex items-center justify-center gap-2 cursor-pointer"
-            >
-              <span className="material-symbols-outlined text-sm">share</span>
-              <span>Export Scenario Brief</span>
-            </button>
+              )
+            </span>
           </div>
         </div>
       </div>

@@ -104,21 +104,21 @@ export default function TimelineView({ entries, latest }: TimelineViewProps) {
           <h1 className="font-display text-2xl md:text-3xl font-bold text-white tracking-tight">
             Timeline Analytics
           </h1>
-          <p className="text-xs md:text-sm text-slate-300 font-medium">
-            Patient Overview | 30 Days (Oct 1 - Oct 30, 2023)
+          <p className="text-xs md:text-sm text-slate-200 font-medium">
+            Patient Biometric Overview & Trajectory
           </p>
         </div>
 
         {/* Timeframe Filter Toggle */}
-        <div className="flex items-center gap-1.5 bg-[#060B08] p-1.5 rounded-xl border border-white/10 self-start md:self-auto">
+        <div className="flex items-center gap-1.5 bg-[#060A07] p-1.5 rounded-xl border border-white/15 self-start md:self-auto">
           {(["7D", "14D", "30D", "90D"] as DateFilter[]).map((filter) => (
             <button
               key={filter}
               onClick={() => setDateFilter(filter)}
               className={`px-3.5 py-1.5 rounded-lg text-xs font-mono font-bold transition-all cursor-pointer ${
                 dateFilter === filter
-                  ? "bg-lime-500/20 text-lime-400 border border-lime-500/40 shadow-lg shadow-lime-500/10"
-                  : "text-slate-400 hover:text-white hover:bg-white/5"
+                  ? "bg-lime-400/20 text-lime-300 border border-lime-400/40 shadow-lg shadow-lime-500/10"
+                  : "text-slate-300 hover:text-white hover:bg-white/10"
               }`}
             >
               {filter}
@@ -130,306 +130,227 @@ export default function TimelineView({ entries, latest }: TimelineViewProps) {
       {/* Top 4 Stat Summary Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {/* Glucose */}
-        <div className="glass-card rounded-2xl p-5 border border-lime-500/20 bg-gradient-to-br from-lime-950/20 to-[#060B08] flex items-center justify-between shadow-xl">
+        <div className="glass-card rounded-2xl p-5 border border-white/15 bg-[#060A07]/90 flex items-center justify-between shadow-xl">
           <div className="flex items-center gap-3.5">
-            <div className="w-11 h-11 rounded-xl bg-lime-500/20 border border-lime-500/30 flex items-center justify-center text-lime-400 shadow-md shadow-lime-500/10">
+            <div className="w-11 h-11 rounded-xl bg-lime-400/20 border border-lime-400/40 flex items-center justify-center text-lime-400 shadow-md">
               <span className="material-symbols-outlined text-2xl">water_drop</span>
             </div>
             <div>
-              <span className="text-[11px] font-mono text-slate-300 block font-medium">
+              <span className="text-[11px] font-mono text-slate-300 block font-semibold">
                 Glucose (Average)
               </span>
-              <div className="flex items-baseline gap-2">
-                <span className="font-display text-2xl font-bold text-white">
-                  {stats.avgGlucose} <span className="text-xs font-normal text-slate-400">mg/dL</span>
+              <div className="flex items-baseline gap-1.5 mt-0.5">
+                <span className="text-2xl font-display font-extrabold text-white">
+                  {stats.avgGlucose}
                 </span>
-                <span className="text-[11px] font-mono font-semibold text-lime-400 flex items-center">
-                  ↘ {stats.glucoseTrend}
-                </span>
+                <span className="text-xs font-mono text-slate-300 font-bold">mg/dL</span>
               </div>
             </div>
           </div>
+          <span className="text-[11px] font-mono text-lime-300 font-bold px-2 py-0.5 rounded-full bg-lime-400/20 border border-lime-400/40">
+            {stats.glucoseTrend}
+          </span>
         </div>
 
         {/* HbA1c */}
-        <div className="glass-card rounded-2xl p-5 border border-emerald-500/20 bg-gradient-to-br from-emerald-950/20 to-[#060B08] flex items-center justify-between shadow-xl">
+        <div className="glass-card rounded-2xl p-5 border border-white/15 bg-[#060A07]/90 flex items-center justify-between shadow-xl">
           <div className="flex items-center gap-3.5">
-            <div className="w-11 h-11 rounded-xl bg-emerald-500/20 border border-emerald-500/30 flex items-center justify-center text-emerald-400 shadow-md shadow-emerald-500/10">
-              <span className="material-symbols-outlined text-2xl">vital_signs</span>
+            <div className="w-11 h-11 rounded-xl bg-lime-400/20 border border-lime-400/40 flex items-center justify-center text-lime-300 shadow-md">
+              <span className="material-symbols-outlined text-2xl">monitor_heart</span>
             </div>
             <div>
-              <span className="text-[11px] font-mono text-slate-300 block font-medium">
-                HbA1c (Estimated)
+              <span className="text-[11px] font-mono text-slate-300 block font-semibold">
+                HbA1c Level
               </span>
-              <div className="flex items-baseline gap-2">
-                <span className="font-display text-2xl font-bold text-white">
+              <div className="flex items-baseline gap-1.5 mt-0.5">
+                <span className="text-2xl font-display font-extrabold text-white">
                   {stats.hba1c}%
-                </span>
-                <span className="text-[11px] font-mono font-semibold text-emerald-400 flex items-center">
-                  ↗ {stats.hba1cTrend}
                 </span>
               </div>
             </div>
           </div>
+          <span className="text-[11px] font-mono text-lime-300 font-bold px-2 py-0.5 rounded-full bg-lime-400/20 border border-lime-400/40">
+            {stats.hba1cTrend}
+          </span>
         </div>
 
         {/* Exercise */}
-        <div className="glass-card rounded-2xl p-5 border border-lime-400/20 bg-gradient-to-br from-lime-900/20 to-[#060B08] flex items-center justify-between shadow-xl">
+        <div className="glass-card rounded-2xl p-5 border border-white/15 bg-[#060A07]/90 flex items-center justify-between shadow-xl">
           <div className="flex items-center gap-3.5">
-            <div className="w-11 h-11 rounded-xl bg-lime-400/20 border border-lime-400/30 flex items-center justify-center text-lime-300 shadow-md shadow-lime-400/10">
+            <div className="w-11 h-11 rounded-xl bg-white/20 border border-white/30 flex items-center justify-center text-white shadow-md">
               <span className="material-symbols-outlined text-2xl">directions_run</span>
             </div>
             <div>
-              <span className="text-[11px] font-mono text-slate-300 block font-medium">
-                Exercise (Avg/Day)
+              <span className="text-[11px] font-mono text-slate-300 block font-semibold">
+                Daily Exercise
               </span>
-              <div className="flex items-baseline gap-2">
-                <span className="font-display text-2xl font-bold text-white">
-                  {stats.avgExercise} <span className="text-xs font-normal text-slate-400">Min</span>
+              <div className="flex items-baseline gap-1.5 mt-0.5">
+                <span className="text-2xl font-display font-extrabold text-white">
+                  {stats.avgExercise}
                 </span>
-                <span className="text-[11px] font-mono font-semibold text-lime-300 flex items-center">
-                  ↗ {stats.exerciseTrend}
-                </span>
+                <span className="text-xs font-mono text-slate-300 font-bold">min/day</span>
               </div>
             </div>
           </div>
+          <span className="text-[11px] font-mono text-lime-300 font-bold px-2 py-0.5 rounded-full bg-lime-400/20 border border-lime-400/40">
+            {stats.exerciseTrend}
+          </span>
         </div>
 
         {/* Sleep */}
-        <div className="glass-card rounded-2xl p-5 border border-amber-500/20 bg-gradient-to-br from-amber-950/20 to-[#060B08] flex items-center justify-between shadow-xl">
+        <div className="glass-card rounded-2xl p-5 border border-white/15 bg-[#060A07]/90 flex items-center justify-between shadow-xl">
           <div className="flex items-center gap-3.5">
-            <div className="w-11 h-11 rounded-xl bg-amber-500/20 border border-amber-500/30 flex items-center justify-center text-amber-400 shadow-md shadow-amber-500/10">
+            <div className="w-11 h-11 rounded-xl bg-white/20 border border-white/30 flex items-center justify-center text-white shadow-md">
               <span className="material-symbols-outlined text-2xl">bedtime</span>
             </div>
             <div>
-              <span className="text-[11px] font-mono text-slate-300 block font-medium">
-                Sleep (Avg/Night)
+              <span className="text-[11px] font-mono text-slate-300 block font-semibold">
+                Sleep Duration
               </span>
-              <div className="flex items-baseline gap-2">
-                <span className="font-display text-2xl font-bold text-white">
-                  {stats.avgSleep} <span className="text-xs font-normal text-slate-400">Hr</span>
+              <div className="flex items-baseline gap-1.5 mt-0.5">
+                <span className="text-2xl font-display font-extrabold text-white">
+                  {stats.avgSleep}
                 </span>
-                <span className="text-[11px] font-mono font-semibold text-amber-400 flex items-center">
-                  ↘ {stats.sleepTrend}
-                </span>
+                <span className="text-xs font-mono text-slate-300 font-bold">hrs/night</span>
               </div>
             </div>
           </div>
+          <span className="text-[11px] font-mono text-white font-bold px-2 py-0.5 rounded-full bg-white/20 border border-white/30">
+            {stats.sleepTrend}
+          </span>
         </div>
       </div>
 
-      {/* Main Dual-Axis Health Trends Chart Card */}
-      <div className="glass-card rounded-3xl p-6 border border-white/10 space-y-6 shadow-2xl relative overflow-hidden bg-[#060B08]/90">
-        {/* Header and Legend */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-white/10 pb-4">
+      {/* Main Dual Y-Axis Spline Chart Card */}
+      <div className="glass-card rounded-3xl p-6 md:p-8 border border-white/15 space-y-6 bg-[#060A07]/90 shadow-2xl">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-white/15 pb-4">
           <div>
-            <h3 className="font-display font-bold text-white text-lg">
-              Health Trends Over 30 Days
+            <h3 className="font-display font-bold text-xl text-white">
+              Biometric Trajectory Chart
             </h3>
+            <p className="text-xs text-slate-200 font-medium mt-0.5">
+              Glucose (mg/dL) vs Exercise/Sleep duration over time
+            </p>
           </div>
 
-          {/* Color-coded legend dots */}
-          <div className="flex flex-wrap items-center gap-4 text-xs font-mono font-semibold">
-            <span className="flex items-center gap-1.5 text-lime-400">
-              <span className="w-2.5 h-2.5 rounded-full bg-lime-400 shadow-sm shadow-lime-400" />
-              Glucose
+          <div className="flex flex-wrap items-center gap-4 text-xs font-mono">
+            <span className="flex items-center gap-2 text-lime-300 font-extrabold">
+              <span className="w-3 h-3 rounded-full bg-lime-400 shadow-sm" />
+              Glucose (mg/dL)
             </span>
-            <span className="flex items-center gap-1.5 text-emerald-400">
-              <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 shadow-sm shadow-emerald-400" />
-              HbA1c
-            </span>
-            <span className="flex items-center gap-1.5 text-lime-300">
-              <span className="w-2.5 h-2.5 rounded-full bg-lime-300 shadow-sm shadow-lime-300" />
-              Exercise
-            </span>
-            <span className="flex items-center gap-1.5 text-amber-400">
-              <span className="w-2.5 h-2.5 rounded-full bg-amber-400 shadow-sm shadow-amber-400" />
-              Sleep
+            <span className="flex items-center gap-2 text-white font-extrabold">
+              <span className="w-3 h-3 rounded-full bg-white border border-slate-400 shadow-sm" />
+              Exercise (min/day)
             </span>
           </div>
         </div>
 
-        {/* Recharts Dual Y-Axis Spline Chart */}
-        <div className="w-full h-80 pt-2">
-          <ResponsiveContainer width="100%" height="100%">
-            <LineChart data={chartData} margin={{ top: 10, right: 10, left: -10, bottom: 0 }}>
-              <CartesianGrid stroke="rgba(255, 255, 255, 0.05)" strokeDasharray="3 3" />
-              <XAxis
-                dataKey="date"
-                stroke="#64748B"
-                fontSize={11}
-                tickLine={false}
-                axisLine={{ stroke: "rgba(255, 255, 255, 0.1)" }}
-              />
-              <YAxis
-                yAxisId="left"
-                stroke="#64748B"
-                fontSize={11}
-                domain={[70, 170]}
-                tickLine={false}
-                axisLine={{ stroke: "rgba(255, 255, 255, 0.1)" }}
-                label={{
-                  value: "Glucose (mg/dL)",
-                  angle: -90,
-                  position: "insideLeft",
-                  style: { textAnchor: "middle", fill: "#64748B", fontSize: 11 },
-                }}
-              />
-              <YAxis
-                yAxisId="right"
-                orientation="right"
-                stroke="#64748B"
-                fontSize={11}
-                domain={[0, 100]}
-                tickLine={false}
-                axisLine={{ stroke: "rgba(255, 255, 255, 0.1)" }}
-                label={{
-                  value: "Minutes / Hours",
-                  angle: 90,
-                  position: "insideRight",
-                  style: { textAnchor: "middle", fill: "#64748B", fontSize: 11 },
-                }}
-              />
-              <Tooltip content={<TimelineCustomTooltip />} />
-
-              {/* Glowing Monotone Splines */}
-              <Line
-                yAxisId="left"
-                type="monotone"
-                dataKey="glucose"
-                name="Glucose"
-                stroke="#84CC16"
-                strokeWidth={2.5}
-                dot={{ fill: "#84CC16", r: 4, stroke: "#060B08", strokeWidth: 2 }}
-                activeDot={{ r: 6, fill: "#A3E635" }}
-              />
-              <Line
-                yAxisId="right"
-                type="monotone"
-                dataKey="hba1c"
-                name="HbA1c"
-                stroke="#10B981"
-                strokeWidth={2.5}
-                dot={{ fill: "#10B981", r: 4, stroke: "#060B08", strokeWidth: 2 }}
-                activeDot={{ r: 6, fill: "#34D399" }}
-              />
-              <Line
-                yAxisId="right"
-                type="monotone"
-                dataKey="exercise"
-                name="Exercise"
-                stroke="#BEF264"
-                strokeWidth={2.5}
-                dot={{ fill: "#BEF264", r: 4, stroke: "#060B08", strokeWidth: 2 }}
-                activeDot={{ r: 6, fill: "#D9F99D" }}
-              />
-              <Line
-                yAxisId="right"
-                type="monotone"
-                dataKey="sleep"
-                name="Sleep"
-                stroke="#FBBF24"
-                strokeWidth={2.5}
-                dot={{ fill: "#FBBF24", r: 4, stroke: "#060B08", strokeWidth: 2 }}
-                activeDot={{ r: 6, fill: "#FDE68A" }}
-              />
-            </LineChart>
-          </ResponsiveContainer>
-        </div>
+        {/* Recharts Render */}
+        <ResponsiveContainer width="100%" height={320}>
+          <LineChart data={chartData} margin={{ top: 15, right: 15, left: -15, bottom: 5 }}>
+            <CartesianGrid stroke="rgba(255, 255, 255, 0.08)" strokeDasharray="4 4" />
+            <XAxis
+              dataKey="date"
+              stroke="#E2E8F0"
+              fontSize={12}
+              fontWeight={600}
+              tickLine={false}
+              axisLine={{ stroke: "rgba(255, 255, 255, 0.15)" }}
+            />
+            <YAxis
+              yAxisId="left"
+              stroke="#A3E635"
+              fontSize={12}
+              fontWeight={600}
+              domain={[70, 160]}
+              tickLine={false}
+              axisLine={{ stroke: "rgba(163, 230, 53, 0.3)" }}
+            />
+            <YAxis
+              yAxisId="right"
+              orientation="right"
+              stroke="#FFFFFF"
+              fontSize={12}
+              fontWeight={600}
+              domain={[0, 120]}
+              tickLine={false}
+              axisLine={{ stroke: "rgba(255, 255, 255, 0.3)" }}
+            />
+            <Tooltip
+              contentStyle={{
+                backgroundColor: "rgba(6, 10, 7, 0.95)",
+                borderColor: "rgba(163, 230, 53, 0.4)",
+                borderRadius: "12px",
+                color: "#FFFFFF",
+                fontSize: "12px",
+                fontFamily: "Comfortaa, cursive, sans-serif",
+                boxShadow: "0 10px 30px rgba(0,0,0,0.8)",
+              }}
+            />
+            <Line
+              yAxisId="left"
+              type="monotone"
+              dataKey="glucose"
+              name="Glucose (mg/dL)"
+              stroke="#A3E635"
+              strokeWidth={3.5}
+              dot={{ fill: "#A3E635", r: 5, strokeWidth: 2, stroke: "#060A07" }}
+              activeDot={{ r: 7, fill: "#BEF264", stroke: "#FFFFFF", strokeWidth: 2 }}
+            />
+            <Line
+              yAxisId="right"
+              type="monotone"
+              dataKey="exercise"
+              name="Exercise (min/day)"
+              stroke="#FFFFFF"
+              strokeWidth={3}
+              strokeDasharray="5 5"
+              dot={{ fill: "#FFFFFF", r: 4, strokeWidth: 2, stroke: "#060A07" }}
+              activeDot={{ r: 6, fill: "#F8FAFC", stroke: "#A3E635", strokeWidth: 2 }}
+            />
+          </LineChart>
+        </ResponsiveContainer>
       </div>
 
-      {/* Timeline History Table */}
-      <div className="glass-card rounded-3xl p-6 border border-white/10 space-y-4 shadow-xl">
-        <h3 className="font-display font-bold text-white text-base">
-          Timeline History Table
-        </h3>
+      {/* History Table */}
+      <div className="glass-card rounded-3xl p-6 border border-white/15 space-y-4 bg-[#060A07]/90 shadow-2xl">
+        <div className="flex items-center justify-between border-b border-white/15 pb-3">
+          <h3 className="font-display font-bold text-lg text-white">Log History Logbook</h3>
+          <span className="text-xs font-mono font-bold text-lime-300">
+            {filteredEntries.length} Total Logs
+          </span>
+        </div>
 
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs font-mono">
             <thead>
-              <tr className="border-b border-white/10 text-slate-400">
-                <th className="pb-3 font-semibold">Date</th>
-                <th className="pb-3 font-semibold">Glucose ↕</th>
-                <th className="pb-3 font-semibold">HbA1c ↕</th>
-                <th className="pb-3 font-semibold">Exercise ↕</th>
-                <th className="pb-3 font-semibold">Sleep ↕</th>
+              <tr className="border-b border-white/15 text-slate-300 uppercase tracking-wider font-extrabold">
+                <th className="pb-3 px-2">Date</th>
+                <th className="pb-3 px-2">Fasting Glucose</th>
+                <th className="pb-3 px-2">HbA1c</th>
+                <th className="pb-3 px-2">Exercise</th>
+                <th className="pb-3 px-2">Sleep</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-white/5">
-              {filteredEntries.map((e) => {
-                const dateStr = new Date(e.timestamp).toLocaleDateString("en-US", {
-                  month: "short",
-                  day: "numeric",
-                });
-                return (
-                  <tr key={e.id} className="hover:bg-white/5 transition-colors">
-                    <td className="py-3 text-slate-200 flex items-center gap-2">
-                      <span className="material-symbols-outlined text-slate-400 text-sm">
-                        calendar_today
-                      </span>
-                      {dateStr}
-                    </td>
-                    <td className="py-3 text-lime-400 font-semibold">
-                      <span className="inline-flex items-center gap-1">
-                        💧 {e.fastingGlucoseMgDl} mg/dL
-                      </span>
-                    </td>
-                    <td className="py-3 text-emerald-400 font-semibold">
-                      <span className="inline-flex items-center gap-1">
-                        🩺 {e.hba1cPercent}%
-                      </span>
-                    </td>
-                    <td className="py-3 text-lime-300 font-semibold">
-                      <span className="inline-flex items-center gap-1">
-                        🏃 {Math.round(e.exerciseMinutesPerWeek / 7)} min/day
-                      </span>
-                    </td>
-                    <td className="py-3 text-amber-400 font-semibold">
-                      <span className="inline-flex items-center gap-1">
-                        🌙 {e.sleepHours} hrs
-                      </span>
-                    </td>
-                  </tr>
-                );
-              })}
+            <tbody className="divide-y divide-white/10 text-white">
+              {filteredEntries.map((e) => (
+                <tr key={e.id} className="hover:bg-lime-400/10 transition-colors">
+                  <td className="py-3 px-2 text-slate-300 font-bold">
+                    {new Date(e.timestamp).toLocaleDateString("en-US", {
+                      month: "short",
+                      day: "numeric",
+                    })}
+                  </td>
+                  <td className="py-3 px-2 font-bold text-lime-300">{e.fastingGlucoseMgDl} mg/dL</td>
+                  <td className="py-3 px-2 font-bold text-white">{e.hba1cPercent.toFixed(1)}%</td>
+                  <td className="py-3 px-2 font-semibold text-slate-200">{e.exerciseMinutesPerWeek} min/wk</td>
+                  <td className="py-3 px-2 font-semibold text-slate-200">{e.sleepHours.toFixed(1)} hrs</td>
+                </tr>
+              ))}
             </tbody>
           </table>
         </div>
       </div>
     </div>
   );
-}
-
-function TimelineCustomTooltip({ active, payload, label }: any) {
-  if (active && payload && payload.length) {
-    return (
-      <div className="bg-[#060B08]/95 backdrop-blur-xl border border-lime-500/30 rounded-xl p-3.5 shadow-2xl space-y-2 text-xs font-sans">
-        <div className="font-mono text-[11px] font-bold text-slate-200 border-b border-white/10 pb-1 flex items-center justify-between gap-4">
-          <span>{label}</span>
-          <span className="text-[10px] text-lime-400 font-semibold uppercase tracking-wider">
-            Snapshot
-          </span>
-        </div>
-        {payload.map((item: any, index: number) => (
-          <div key={`item-${index}`} className="flex items-center justify-between gap-4 font-mono">
-            <span className="flex items-center gap-1.5 text-slate-300">
-              <span className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: item.color }} />
-              {item.name}:
-            </span>
-            <span className="font-bold text-white">
-              {item.value}{" "}
-              {item.name === "HbA1c"
-                ? "%"
-                : item.name === "Glucose"
-                ? "mg/dL"
-                : item.name === "Exercise"
-                ? "min"
-                : "hrs"}
-            </span>
-          </div>
-        ))}
-      </div>
-    );
-  }
-  return null;
 }

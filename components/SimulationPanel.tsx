@@ -1,171 +1,193 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
-import type { TwinEntry, TwinScores, SimulationChangeData } from "@/lib/types";
+import { useState, useMemo } from "react";
+import type { TwinEntry, SimulationChangeData } from "@/lib/types";
 import { computeScores, simulate } from "@/lib/twin";
-
-export type { SimulationChangeData };
 
 interface SimulationPanelProps {
   baseEntry: TwinEntry;
-  onSimulationChange?: (simData: SimulationChangeData) => void;
+  onSimulationChange?: (data: SimulationChangeData) => void;
 }
 
 export default function SimulationPanel({
   baseEntry,
   onSimulationChange,
 }: SimulationPanelProps) {
-  const [weightDelta, setWeightDelta] = useState(-3);
-  const [exerciseDelta, setExerciseDelta] = useState(60);
-  const [dietDelta, setDietDelta] = useState(1);
-  const [sleepDelta, setSleepDelta] = useState(0.5);
+  const [weightChange, setWeightChange] = useState<number>(0);
+  const [exerciseChange, setExerciseChange] = useState<number>(0);
+  const [dietChange, setDietChange] = useState<number>(0);
+  const [sleepChange, setSleepChange] = useState<number>(0);
 
   const baseScores = useMemo(() => computeScores(baseEntry), [baseEntry]);
 
-  const simulatedEntry = useMemo(
-    () =>
-      simulate(baseEntry, {
-        weightDeltaKg: weightDelta,
-        exerciseDeltaMinutes: exerciseDelta,
-        dietDeltaPoints: dietDelta,
-        sleepDeltaHours: sleepDelta,
-      }),
-    [baseEntry, weightDelta, exerciseDelta, dietDelta, sleepDelta]
-  );
-
-  const simScores = useMemo(() => computeScores(simulatedEntry), [simulatedEntry]);
-
-  const deltas = useMemo(
-    () => ({
-      metabolic: simScores.metabolic - baseScores.metabolic,
-      activity: simScores.activity - baseScores.activity,
-      nutrition: simScores.nutrition - baseScores.nutrition,
-      composite: simScores.composite - baseScores.composite,
-    }),
-    [baseScores, simScores]
-  );
+  const { simulatedEntry, simScores, deltas } = useMemo(() => {
+    const simEntry = simulate(baseEntry, {
+      weightDeltaKg: weightChange,
+      exerciseDeltaMinutes: exerciseChange,
+      dietDeltaPoints: dietChange,
+      sleepDeltaHours: sleepChange,
+    });
+    const scores = computeScores(simEntry);
+    return {
+      simulatedEntry: simEntry,
+      simScores: scores,
+      deltas: {
+        metabolic: scores.metabolic - baseScores.metabolic,
+        activity: scores.activity - baseScores.activity,
+        nutrition: scores.nutrition - baseScores.nutrition,
+        composite: scores.composite - baseScores.composite,
+      },
+    };
+  }, [baseEntry, baseScores, weightChange, exerciseChange, dietChange, sleepChange]);
 
   const isModified =
-    weightDelta !== 0 || exerciseDelta !== 0 || dietDelta !== 0 || sleepDelta !== 0;
+    weightChange !== 0 ||
+    exerciseChange !== 0 ||
+    dietChange !== 0 ||
+    sleepChange !== 0;
 
-  const sliderDeltas = useMemo(
-    () => ({
-      weightKg: weightDelta,
-      exerciseMinutes: exerciseDelta,
-      dietPoints: dietDelta,
-      sleepHours: sleepDelta,
-    }),
-    [weightDelta, exerciseDelta, dietDelta, sleepDelta]
-  );
-
-  // Notify parent/AI Coach whenever simulation updates
-  useEffect(() => {
+  useMemo(() => {
     if (onSimulationChange) {
       onSimulationChange({
         simulatedEntry,
         simScores,
         deltas,
-        sliderDeltas,
         isModified,
+        sliderDeltas: {
+          weightKg: weightChange,
+          exerciseMinutes: exerciseChange,
+          dietPoints: dietChange,
+          sleepHours: sleepChange,
+        },
       });
     }
-  }, [simulatedEntry, simScores, deltas, sliderDeltas, isModified, onSimulationChange]);
+  }, [
+    simulatedEntry,
+    simScores,
+    deltas,
+    isModified,
+    weightChange,
+    exerciseChange,
+    dietChange,
+    sleepChange,
+    onSimulationChange,
+  ]);
 
-
-  function handleReset() {
-    setWeightDelta(0);
-    setExerciseDelta(0);
-    setDietDelta(0);
-    setSleepDelta(0);
+  function resetAll() {
+    setWeightChange(0);
+    setExerciseChange(0);
+    setDietChange(0);
+    setSleepChange(0);
   }
 
   return (
-    <div className="glass-card rounded-2xl p-6 space-y-6 border border-white/10 shadow-2xl relative font-sans">
+    <div className="glass-card p-6 md:p-7 rounded-2xl space-y-6 border border-white/15 shadow-2xl relative font-sans bg-[#060A07]/90">
       {/* Header */}
-      <div className="flex items-center justify-between border-b border-white/10 pb-4">
+      <div className="flex items-center justify-between border-b border-white/15 pb-4">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl bg-gradient-to-r from-lime-500 to-emerald-600 flex items-center justify-center text-[#060B08] shadow-lg shadow-lime-500/20">
-            <span className="material-symbols-outlined font-bold text-xl">insights</span>
+          <div className="w-10 h-10 rounded-xl gradient-bg flex items-center justify-center shadow-lg shadow-lime-500/30">
+            <span className="material-symbols-outlined text-[#060A07] font-bold text-xl">tune</span>
           </div>
           <div>
-            <h2 className="font-display font-bold text-white">What-If Digital Twin Simulator</h2>
-            <p className="text-xs text-slate-300 font-medium">Real-time lifestyle impact projection</p>
+            <h3 className="font-display text-lg font-bold text-white">What-If Simulator</h3>
+            <p className="text-xs text-slate-200 font-medium">Predict Lifestyle Shift</p>
           </div>
         </div>
 
-        {/* Reset Button */}
         {isModified && (
           <button
-            type="button"
-            onClick={handleReset}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-lime-500/10 hover:bg-lime-500/20 text-lime-400 border border-lime-500/30 font-mono text-xs font-bold transition-all shadow-sm active:scale-95 cursor-pointer"
-            title="Reset all sliders to baseline"
+            onClick={resetAll}
+            className="px-3 py-1 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 text-slate-100 hover:text-white font-mono text-[11px] font-bold transition-all flex items-center gap-1 cursor-pointer"
           >
-            <span className="material-symbols-outlined text-sm">restart_alt</span>
+            <span className="material-symbols-outlined text-xs">restart_alt</span>
             <span>Reset</span>
           </button>
         )}
       </div>
 
       {/* Sliders Grid */}
-      <div className="space-y-4">
-        <Slider
+      <div className="space-y-5">
+        {/* Weight Slider */}
+        <SliderControl
           label="Weight Change"
           unit="kg"
-          value={weightDelta}
+          value={weightChange}
           min={-15}
           max={10}
           step={0.5}
-          onChange={setWeightDelta}
+          onChange={setWeightChange}
+          displayVal={
+            weightChange === 0
+              ? "0 kg (No Change)"
+              : `${weightChange > 0 ? "+" : ""}${weightChange} kg (${(baseEntry.weightKg + weightChange).toFixed(1)} kg total)`
+          }
         />
 
-        <Slider
-          label="Exercise Shift"
+        {/* Exercise Slider */}
+        <SliderControl
+          label="Exercise Boost"
           unit="min/wk"
-          value={exerciseDelta}
+          value={exerciseChange}
           min={-90}
           max={200}
-          step={10}
-          onChange={setExerciseDelta}
+          step={15}
+          onChange={setExerciseChange}
+          displayVal={
+            exerciseChange === 0
+              ? "0 min (No Change)"
+              : `${exerciseChange > 0 ? "+" : ""}${exerciseChange} min/wk (${baseEntry.exerciseMinutesPerWeek + exerciseChange} min total)`
+          }
         />
 
-        <Slider
-          label="Diet Quality Shift"
+        {/* Diet Slider */}
+        <SliderControl
+          label="Diet Quality Adjust"
           unit="pts"
-          value={dietDelta}
-          min={-3}
-          max={3}
+          value={dietChange}
+          min={-2}
+          max={2}
           step={1}
-          onChange={setDietDelta}
+          onChange={setDietChange}
+          displayVal={
+            dietChange === 0
+              ? "0 pts (Current Diet)"
+              : `${dietChange > 0 ? "+" : ""}${dietChange} pts (Rating ${Math.min(5, Math.max(1, baseEntry.dietQuality + dietChange))}/5)`
+          }
         />
 
-        <Slider
-          label="Sleep Shift"
-          unit="hrs/night"
-          value={sleepDelta}
+        {/* Sleep Slider */}
+        <SliderControl
+          label="Sleep Duration"
+          unit="hrs"
+          value={sleepChange}
           min={-3}
           max={3}
           step={0.5}
-          onChange={setSleepDelta}
+          onChange={setSleepChange}
+          displayVal={
+            sleepChange === 0
+              ? "0 hrs (No Change)"
+              : `${sleepChange > 0 ? "+" : ""}${sleepChange} hrs/night (${(baseEntry.sleepHours + sleepChange).toFixed(1)} hrs total)`
+          }
         />
       </div>
 
       {/* Real-time Sub-Score Delta Badges */}
-      <div className="space-y-3 pt-2 border-t border-white/10">
-        <h4 className="text-[11px] font-mono font-bold text-slate-300 uppercase tracking-wider flex items-center justify-between">
+      <div className="space-y-3 pt-2 border-t border-white/15">
+        <h4 className="text-[11px] font-mono font-bold text-slate-200 uppercase tracking-wider flex items-center justify-between">
           <span>Projected Score Impact</span>
-          <span className="text-lime-400">Baseline vs. Sim</span>
+          <span className="text-lime-300">Baseline vs. Sim</span>
         </h4>
 
         {/* Composite Score Highlight Box */}
-        <div className="bg-[#060B08]/90 border border-lime-500/30 rounded-xl p-4 flex items-center justify-between shadow-lg">
+        <div className="bg-[#060A07]/95 border border-lime-400/35 rounded-xl p-4 flex items-center justify-between shadow-lg">
           <div>
-            <span className="text-xs font-mono font-bold text-lime-400 uppercase tracking-wider block">
+            <span className="text-xs font-mono font-bold text-lime-300 uppercase tracking-wider block">
               Composite Twin Score
             </span>
             <div className="flex items-baseline gap-2 mt-0.5">
-              <span className="text-sm font-mono text-slate-400">{baseScores.composite}</span>
-              <span className="text-slate-500 text-xs">→</span>
+              <span className="text-sm font-mono text-slate-300 font-bold">{baseScores.composite}</span>
+              <span className="text-slate-400 text-xs">→</span>
               <span className="text-2xl font-display font-extrabold text-white">
                 {simScores.composite}
               </span>
@@ -197,18 +219,17 @@ export default function SimulationPanel({
         </div>
 
         {/* Est. HbA1c Metric */}
-        <div className="bg-[#060B08]/60 border border-white/10 rounded-xl p-3 flex items-center justify-between">
+        <div className="bg-[#060A07]/80 border border-white/15 rounded-xl p-3 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <span className="material-symbols-outlined text-emerald-400 text-sm">vital_signs</span>
-            <span className="text-xs font-mono font-bold text-slate-200">Est. HbA1c Level</span>
+            <span className="material-symbols-outlined text-lime-400 text-sm">vital_signs</span>
+            <span className="text-xs font-mono font-bold text-white">Est. HbA1c Level</span>
           </div>
           <div className="flex items-baseline gap-2">
-            <span className="text-xs font-mono text-slate-400">{baseEntry.hba1cPercent.toFixed(1)}%</span>
-            <span className="text-slate-500 text-xs">→</span>
+            <span className="text-xs font-mono text-slate-300 font-semibold">{baseEntry.hba1cPercent.toFixed(1)}%</span>
+            <span className="text-slate-400 text-xs">→</span>
             <span className="text-sm font-display font-bold text-white">
               {simulatedEntry.hba1cPercent.toFixed(1)}%
             </span>
-            <HbA1cDeltaBadge delta={simulatedEntry.hba1cPercent - baseEntry.hba1cPercent} />
           </div>
         </div>
       </div>
@@ -216,14 +237,14 @@ export default function SimulationPanel({
   );
 }
 
-function Slider({
+function SliderControl({
   label,
-  unit,
   value,
   min,
   max,
   step,
   onChange,
+  displayVal,
 }: {
   label: string;
   unit: string;
@@ -231,15 +252,15 @@ function Slider({
   min: number;
   max: number;
   step: number;
-  onChange: (v: number) => void;
+  onChange: (val: number) => void;
+  displayVal: string;
 }) {
-  const formattedValue = `${value > 0 ? "+" : ""}${value} ${unit}`;
   return (
-    <div className="space-y-1.5 font-sans">
-      <div className="flex justify-between items-center text-xs font-mono font-semibold">
-        <span className="text-slate-200">{label}</span>
-        <span className="text-lime-400 font-bold px-2 py-0.5 rounded-md bg-lime-500/10 border border-lime-500/20">
-          {formattedValue}
+    <div className="space-y-1.5">
+      <div className="flex justify-between items-center text-xs font-mono">
+        <span className="text-white font-bold">{label}</span>
+        <span className={`font-semibold ${value !== 0 ? "text-lime-300" : "text-slate-300"}`}>
+          {displayVal}
         </span>
       </div>
       <input
@@ -267,61 +288,42 @@ function SubScoreComparison({
   delta: number;
 }) {
   return (
-    <div className="bg-[#060B08]/80 border border-white/10 rounded-xl p-3 space-y-1 font-sans">
-      <div className="text-[10px] font-mono text-slate-300 font-bold uppercase tracking-wider">
-        {label}
+    <div className="bg-[#060A07]/80 border border-white/15 rounded-xl p-3 space-y-1">
+      <div className="flex justify-between items-center text-[11px] font-mono font-bold text-slate-200">
+        <span>{label}</span>
+        <DeltaBadge delta={delta} />
       </div>
-      <div className="flex items-baseline justify-between">
-        <div className="flex items-baseline gap-1.5">
-          <span className="text-xs text-slate-400 font-mono">{before}</span>
-          <span className="text-slate-500 text-xs">→</span>
-          <span className="text-sm font-display font-bold text-white">{after}</span>
-        </div>
-        <DeltaBadge delta={delta} isScore />
+      <div className="flex items-baseline gap-1.5 font-mono">
+        <span className="text-xs text-slate-300 font-semibold">{before}</span>
+        <span className="text-slate-400 text-[10px]">→</span>
+        <span className="text-sm font-bold text-white">{after}</span>
       </div>
     </div>
   );
 }
 
-function DeltaBadge({ delta, isScore }: { delta: number; isScore?: boolean }) {
+function DeltaBadge({ delta, isScore = false }: { delta: number; isScore?: boolean }) {
   if (delta === 0) {
     return (
-      <span className="px-2 py-0.5 rounded-full text-[11px] font-mono font-bold bg-slate-800 text-slate-300 border border-white/10">
+      <span className="text-[10px] font-mono text-slate-300 font-bold px-1.5 py-0.5 rounded bg-white/10 border border-white/15">
         0
       </span>
     );
   }
 
   const isPositive = delta > 0;
-  const badgeStyle = isPositive
-    ? "bg-lime-500/15 text-lime-400 border-lime-500/30"
-    : "bg-rose-500/15 text-rose-400 border-rose-500/30";
+  const badgeBg = isPositive
+    ? "bg-lime-400/20 text-lime-300 border-lime-400/40"
+    : "bg-white/10 text-slate-200 border-white/20";
 
   return (
-    <span className={`px-2 py-0.5 rounded-full text-[11px] font-mono font-bold border ${badgeStyle}`}>
+    <span
+      className={`text-[10px] font-mono font-extrabold px-2 py-0.5 rounded-full border ${badgeBg} shadow-sm ${
+        isScore ? "text-xs px-2.5 py-1" : ""
+      }`}
+    >
       {isPositive ? "+" : ""}
-      {delta.toFixed(1)}
-    </span>
-  );
-}
-
-function HbA1cDeltaBadge({ delta }: { delta: number }) {
-  if (Math.abs(delta) < 0.01) {
-    return (
-      <span className="px-1.5 py-0.5 rounded text-[10px] font-mono font-bold bg-slate-800 text-slate-400">
-        0.0%
-      </span>
-    );
-  }
-
-  // Lower HbA1c is better
-  const isImproved = delta < 0;
-  const badgeStyle = isImproved ? "text-lime-400" : "text-rose-400";
-
-  return (
-    <span className={`text-xs font-mono font-bold ${badgeStyle}`}>
-      ({delta > 0 ? "+" : ""}
-      {delta.toFixed(2)}%)
+      {delta.toFixed(isScore ? 1 : 0)}
     </span>
   );
 }

@@ -104,14 +104,14 @@ export default function AiCoach({
   }
 
   return (
-    <div className="glass-card rounded-3xl flex flex-col h-full overflow-hidden border border-white/10 shadow-2xl relative bg-[#060B08]/85 backdrop-blur-xl font-sans">
+    <div className="glass-card rounded-3xl flex flex-col h-full overflow-hidden border border-white/15 shadow-2xl relative bg-[#060A07]/90 backdrop-blur-xl font-sans">
       {/* Hero AI Insight Glass Banner */}
-      <div className="p-5 border-b border-white/10 bg-gradient-to-r from-[#0E1712]/90 via-[#132019]/80 to-[#0E1712]/90 relative overflow-hidden">
+      <div className="p-5 border-b border-white/15 bg-gradient-to-r from-[#0E150F]/90 via-[#141F16]/80 to-[#0E150F]/90 relative overflow-hidden">
         <div className="ambient-glow-lime" />
         <div className="flex items-start justify-between gap-4">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-2xl gradient-bg flex items-center justify-center shadow-lg shadow-lime-500/25 shrink-0">
-              <span className="material-symbols-outlined text-[#060B08] text-[22px] font-bold">
+            <div className="w-10 h-10 rounded-2xl gradient-bg flex items-center justify-center shadow-lg shadow-lime-500/30 shrink-0">
+              <span className="material-symbols-outlined text-[#060A07] text-[22px] font-bold">
                 auto_awesome
               </span>
             </div>
@@ -120,11 +120,11 @@ export default function AiCoach({
                 <h2 className="font-display font-bold text-lg text-white">
                   Diabet<span className="text-lime-400">X</span> AI Coach
                 </h2>
-                <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded-full bg-lime-500/15 border border-lime-500/30 text-lime-300 uppercase tracking-wider">
+                <span className="text-[10px] font-mono font-extrabold px-2 py-0.5 rounded-full bg-lime-400/20 border border-lime-400/40 text-lime-300 uppercase tracking-wider">
                   Twin Intelligence
                 </span>
               </div>
-              <p className="text-xs text-slate-300 font-medium mt-0.5 leading-tight">
+              <p className="text-xs text-slate-200 font-medium mt-0.5 leading-tight">
                 {isSimActive && simulation ? (
                   <span className="text-lime-300 font-semibold flex items-center gap-1">
                     <span className="w-1.5 h-1.5 rounded-full bg-lime-400 animate-pulse" />
@@ -143,24 +143,24 @@ export default function AiCoach({
 
         {/* What-If Simulation Mode Prominent Indicator Badge */}
         {isSimActive && simulation && (
-          <div className="mt-4 p-3 rounded-xl bg-lime-500/10 border border-lime-500/30 flex flex-wrap items-center justify-between gap-2 shadow-inner">
-            <div className="flex items-center gap-2 text-xs font-mono font-bold text-lime-300">
+          <div className="mt-4 p-3 rounded-xl bg-lime-400/15 border border-lime-400/35 flex flex-wrap items-center justify-between gap-2 shadow-inner">
+            <div className="flex items-center gap-2 text-xs font-mono font-extrabold text-lime-300">
               <span className="material-symbols-outlined text-lime-400 text-sm animate-spin" style={{ animationDuration: "6s" }}>
                 tune
               </span>
               <span className="uppercase tracking-wider">What-If Simulation Active</span>
             </div>
             <div className="flex flex-wrap items-center gap-1.5 text-[11px] font-mono">
-              <span className="px-2 py-0.5 rounded-md bg-[#060B08]/80 border border-white/10 text-slate-200">
+              <span className="px-2 py-0.5 rounded-md bg-[#060A07]/90 border border-white/15 text-white font-bold">
                 Weight: {simulation.sliderDeltas.weightKg >= 0 ? "+" : ""}{simulation.sliderDeltas.weightKg}kg
               </span>
-              <span className="px-2 py-0.5 rounded-md bg-[#060B08]/80 border border-white/10 text-slate-200">
+              <span className="px-2 py-0.5 rounded-md bg-[#060A07]/90 border border-white/15 text-white font-bold">
                 Exercise: {simulation.sliderDeltas.exerciseMinutes >= 0 ? "+" : ""}{simulation.sliderDeltas.exerciseMinutes}m/wk
               </span>
-              <span className="px-2 py-0.5 rounded-md bg-[#060B08]/80 border border-white/10 text-slate-200">
+              <span className="px-2 py-0.5 rounded-md bg-[#060A07]/90 border border-white/15 text-white font-bold">
                 Diet: {simulation.sliderDeltas.dietPoints >= 0 ? "+" : ""}{simulation.sliderDeltas.dietPoints}pt
               </span>
-              <span className="px-2 py-0.5 rounded-md bg-[#060B08]/80 border border-white/10 text-slate-200">
+              <span className="px-2 py-0.5 rounded-md bg-[#060A07]/90 border border-white/15 text-white font-bold">
                 Sleep: {simulation.sliderDeltas.sleepHours >= 0 ? "+" : ""}{simulation.sliderDeltas.sleepHours}h
               </span>
             </div>
@@ -171,13 +171,13 @@ export default function AiCoach({
       {/* Chat History Container */}
       <div ref={chatScrollRef} className="chat-scroll flex-1 p-5 overflow-y-auto space-y-4 max-h-[380px] min-h-[260px]">
         {history.length === 0 ? (
-          <div className="flex items-start gap-3 bg-[#060B08]/90 p-4 rounded-2xl border border-white/10 text-xs text-slate-200">
+          <div className="flex items-start gap-3 bg-[#060A07]/90 p-4 rounded-2xl border border-white/15 text-xs text-slate-200 shadow-md">
             <span className="material-symbols-outlined text-lime-400 shrink-0 mt-0.5">info</span>
             <div className="space-y-1">
-              <p className="font-semibold text-white">
+              <p className="font-bold text-white">
                 Welcome to your personal Digital Twin AI Health Coach.
               </p>
-              <p className="leading-relaxed text-slate-300">
+              <p className="leading-relaxed text-slate-200">
                 Ask questions about your logged health metrics (HbA1c, glucose, sleep, exercise) or run What-If simulations to project lifestyle impact. All responses are grounded in your mathematical Twin Scores.
               </p>
             </div>
@@ -185,26 +185,26 @@ export default function AiCoach({
         ) : (
           history.map((turn, i) => (
             <div key={i} className="space-y-3">
-              {/* User message */}
+              {/* User message - Off-White / Crisp White badge */}
               <div className="flex gap-3 flex-row-reverse max-w-[88%] ml-auto">
-                <div className="w-8 h-8 rounded-full bg-emerald-600/30 flex items-center justify-center text-emerald-300 shrink-0 border border-emerald-500/40 shadow-sm">
+                <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center text-white shrink-0 border border-white/30 shadow-sm font-bold">
                   <span className="material-symbols-outlined text-sm">person</span>
                 </div>
-                <div className="bg-emerald-600/20 border border-emerald-500/30 text-white p-3.5 rounded-2xl rounded-tr-none text-xs leading-relaxed font-medium shadow-md shadow-emerald-500/10">
+                <div className="bg-white/15 border border-white/25 text-white p-3.5 rounded-2xl rounded-tr-none text-xs leading-relaxed font-semibold shadow-md">
                   {turn.question}
                 </div>
               </div>
-              {/* AI message */}
+              {/* AI message - Lime Green & White badge */}
               <div className="flex gap-3 max-w-[88%]">
-                <div className="w-8 h-8 rounded-full gradient-bg flex items-center justify-center text-[#060B08] shrink-0 font-bold shadow-md shadow-lime-500/20">
+                <div className="w-8 h-8 rounded-full gradient-bg flex items-center justify-center text-[#060A07] shrink-0 font-bold shadow-md shadow-lime-500/20">
                   <span className="material-symbols-outlined text-sm font-bold">auto_awesome</span>
                 </div>
                 <div className="space-y-1">
-                  <div className="bg-[#0E1712]/90 border border-lime-500/20 text-white p-4 rounded-2xl rounded-tl-none text-xs leading-relaxed font-medium shadow-md shadow-lime-500/10 whitespace-pre-wrap">
+                  <div className="bg-[#0E150F]/95 border border-lime-400/30 text-white p-4 rounded-2xl rounded-tl-none text-xs leading-relaxed font-medium shadow-md shadow-lime-500/10 whitespace-pre-wrap">
                     {turn.answer}
                   </div>
                   {turn.isSimulated && (
-                    <span className="text-[10px] font-mono text-lime-400/80 px-2 block">
+                    <span className="text-[10px] font-mono text-lime-300 font-bold px-2 block">
                       ⚡ Evaluated under What-If Simulation context
                     </span>
                   )}
@@ -217,14 +217,14 @@ export default function AiCoach({
         {/* Typing Indicator */}
         {loading && (
           <div className="flex gap-3 max-w-[85%]">
-            <div className="w-8 h-8 rounded-full gradient-bg flex items-center justify-center text-[#060B08] shrink-0 shadow-md">
+            <div className="w-8 h-8 rounded-full gradient-bg flex items-center justify-center text-[#060A07] shrink-0 shadow-md">
               <span className="material-symbols-outlined text-sm font-bold animate-pulse">auto_awesome</span>
             </div>
-            <div className="bg-[#0E1712]/90 border border-lime-500/30 p-3.5 rounded-2xl rounded-tl-none text-xs text-lime-300 flex items-center gap-2 font-mono font-semibold">
+            <div className="bg-[#0E150F]/95 border border-lime-400/35 p-3.5 rounded-2xl rounded-tl-none text-xs text-lime-300 flex items-center gap-2 font-mono font-extrabold">
               <span className="flex gap-1 items-center">
                 <span className="w-2 h-2 rounded-full bg-lime-400 animate-bounce" style={{ animationDelay: "0ms" }} />
-                <span className="w-2 h-2 rounded-full bg-lime-400 animate-bounce" style={{ animationDelay: "150ms" }} />
-                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-bounce" style={{ animationDelay: "300ms" }} />
+                <span className="w-2 h-2 rounded-full bg-lime-300 animate-bounce" style={{ animationDelay: "150ms" }} />
+                <span className="w-2 h-2 rounded-full bg-white animate-bounce" style={{ animationDelay: "300ms" }} />
               </span>
               <span>AI Coach is analyzing telemetry & scenario metrics...</span>
             </div>
@@ -232,16 +232,16 @@ export default function AiCoach({
         )}
 
         {error && (
-          <div className="text-xs text-rose-300 p-3.5 rounded-xl bg-rose-500/10 border border-rose-500/30 flex items-center gap-2">
-            <span className="material-symbols-outlined text-rose-400 text-sm">warning</span>
+          <div className="text-xs text-lime-200 p-3.5 rounded-xl bg-lime-400/15 border border-lime-400/40 flex items-center gap-2">
+            <span className="material-symbols-outlined text-lime-300 text-sm">warning</span>
             <span>{error}</span>
           </div>
         )}
       </div>
 
       {/* Chat Controls & Input */}
-      <div className="p-4 bg-[#060B08]/90 border-t border-white/10 space-y-3">
-        {/* Quick Action Prompt Suggestion Chips */}
+      <div className="p-4 bg-[#060A07]/95 border-t border-white/15 space-y-3">
+        {/* Quick Action Prompt Suggestion Chips - Crisp White / Lime */}
         <div className="flex gap-2 overflow-x-auto chat-scroll pb-1">
           {suggestions.map((s) => (
             <button
@@ -249,7 +249,7 @@ export default function AiCoach({
               type="button"
               onClick={() => ask(s)}
               disabled={loading}
-              className="whitespace-nowrap px-3.5 py-1.5 rounded-full bg-[#0E1712]/80 border border-white/10 hover:border-lime-400/50 hover:bg-lime-500/10 text-xs font-mono font-semibold text-slate-200 hover:text-lime-300 transition-all cursor-pointer flex items-center gap-1.5 shadow-sm active:scale-95 disabled:opacity-40"
+              className="whitespace-nowrap px-3.5 py-1.5 rounded-full bg-white/10 border border-white/20 hover:border-lime-400/60 hover:bg-lime-400/15 text-xs font-mono font-bold text-slate-100 hover:text-lime-300 transition-all cursor-pointer flex items-center gap-1.5 shadow-sm active:scale-95 disabled:opacity-40"
             >
               <span className="material-symbols-outlined text-lime-400 text-xs">auto_awesome</span>
               <span>{s}</span>
@@ -273,12 +273,12 @@ export default function AiCoach({
                 ? "Ask about this What-If simulation scenario..."
                 : "Ask about your glucose, HbA1c, or Twin score..."
             }
-            className="input pr-12 text-xs font-semibold text-white placeholder:text-slate-500"
+            className="input pr-12 text-xs font-semibold text-white placeholder:text-slate-400"
           />
           <button
             type="submit"
             disabled={loading || !question.trim()}
-            className="absolute right-1.5 top-1/2 -translate-y-1/2 w-8 h-8 gradient-bg rounded-xl flex items-center justify-center text-[#060B08] disabled:opacity-40 active:scale-95 transition-all shadow-md hover:shadow-lime-500/25"
+            className="absolute right-1.5 top-1/2 -translate-y-1/2 w-8 h-8 gradient-bg rounded-xl flex items-center justify-center text-[#060A07] disabled:opacity-40 active:scale-95 transition-all shadow-md hover:shadow-lime-500/30 cursor-pointer"
           >
             <span className="material-symbols-outlined text-sm font-bold">send</span>
           </button>

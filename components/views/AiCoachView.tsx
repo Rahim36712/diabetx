@@ -24,7 +24,7 @@ export default function AiCoachView({
   return (
     <div className="space-y-6 animate-card font-sans">
       {/* Header Bar */}
-      <div className="glass-card rounded-2xl p-6 border border-white/10 flex flex-wrap items-center justify-between gap-4">
+      <div className="glass-card rounded-2xl p-6 border border-white/15 flex flex-wrap items-center justify-between gap-4 bg-[#060A07]/90">
         <div className="space-y-1">
           <div className="flex items-center gap-2.5">
             <span className="material-symbols-outlined text-lime-400 text-2xl">
@@ -34,13 +34,13 @@ export default function AiCoachView({
               Dedicated AI Health Coach Workspace
             </h2>
           </div>
-          <p className="text-xs text-slate-300 font-medium">
+          <p className="text-xs text-slate-200 font-medium">
             Full-height AI chat interface grounded in your digital twin telemetry and simulation models.
           </p>
         </div>
 
         {isSim && (
-          <span className="px-3.5 py-1.5 rounded-full bg-lime-500/15 border border-lime-500/30 text-lime-300 text-xs font-mono font-bold animate-pulse flex items-center gap-2">
+          <span className="px-3.5 py-1.5 rounded-full bg-lime-400/20 border border-lime-400/40 text-lime-300 text-xs font-mono font-extrabold animate-pulse flex items-center gap-2">
             <span className="w-2 h-2 rounded-full bg-lime-400" />
             GROUNDED IN SIMULATION SCENARIO
           </span>
@@ -57,23 +57,23 @@ export default function AiCoachView({
         {/* Right 4 Cols: Live Biometric Telemetry & Twin Status Sidebar */}
         <div className="lg:col-span-4 space-y-6 flex flex-col justify-between">
           {/* Twin Composite Ring & Explainability Card */}
-          <div className="glass-card rounded-3xl p-6 border border-white/10 flex flex-col items-center justify-center space-y-4 text-center">
+          <div className="glass-card rounded-3xl p-6 border border-white/15 flex flex-col items-center justify-center space-y-4 text-center bg-[#060A07]/90">
             <ScoreRing score={activeScores.composite} size={170} />
             <div className="space-y-1">
-              <span className="text-[10px] font-mono font-bold text-lime-400 uppercase tracking-wider block">
+              <span className="text-[10px] font-mono font-extrabold text-lime-300 uppercase tracking-wider block">
                 Active Grounding Context
               </span>
-              <p className="text-xs font-medium text-slate-200 leading-relaxed">
+              <p className="text-xs font-semibold text-slate-100 leading-relaxed">
                 {explainScores(activeEntry, activeScores)}
               </p>
             </div>
           </div>
 
           {/* Sub-Scores Telemetry Readout */}
-          <div className="glass-card rounded-2xl p-5 border border-white/10 space-y-3">
-            <h3 className="text-xs font-mono font-bold text-slate-300 uppercase tracking-wider flex items-center justify-between">
+          <div className="glass-card rounded-2xl p-5 border border-white/15 space-y-3 bg-[#060A07]/90">
+            <h3 className="text-xs font-mono font-extrabold text-slate-200 uppercase tracking-wider flex items-center justify-between">
               <span>Telemetry Sub-Scores</span>
-              <span className="text-lime-400">Live</span>
+              <span className="text-lime-300">Live</span>
             </h3>
 
             <div className="space-y-2.5">
@@ -92,7 +92,7 @@ export default function AiCoachView({
               <TelemetryRow
                 label="Nutrition Quality"
                 score={activeScores.nutrition}
-                color="bg-emerald-400"
+                color="bg-white"
                 value={`Diet rating: ${activeEntry.dietQuality}/5`}
               />
             </div>
@@ -100,12 +100,12 @@ export default function AiCoachView({
 
           {/* Simulation Delta Info Card */}
           {isSim && simulation && (
-            <div className="glass-card rounded-2xl p-5 border border-lime-500/30 bg-lime-500/10 space-y-2">
-              <div className="flex items-center gap-2 text-xs font-mono font-bold text-lime-300">
+            <div className="glass-card rounded-2xl p-5 border border-lime-400/40 bg-lime-400/15 space-y-2">
+              <div className="flex items-center gap-2 text-xs font-mono font-extrabold text-lime-300">
                 <span className="material-symbols-outlined text-sm">tune</span>
                 <span>Active Scenario Shifts</span>
               </div>
-              <div className="grid grid-cols-2 gap-2 text-[11px] font-mono text-slate-200 pt-1">
+              <div className="grid grid-cols-2 gap-2 text-[11px] font-mono font-bold text-white pt-1">
                 <div>Weight: {simulation.sliderDeltas.weightKg >= 0 ? "+" : ""}{simulation.sliderDeltas.weightKg} kg</div>
                 <div>Exercise: {simulation.sliderDeltas.exerciseMinutes >= 0 ? "+" : ""}{simulation.sliderDeltas.exerciseMinutes} min</div>
                 <div>Diet: {simulation.sliderDeltas.dietPoints >= 0 ? "+" : ""}{simulation.sliderDeltas.dietPoints} pts</div>
@@ -115,10 +115,10 @@ export default function AiCoachView({
           )}
 
           {/* System Safety Notice */}
-          <div className="glass-card rounded-2xl p-4 border border-white/10 text-[11px] text-slate-300 leading-relaxed font-mono flex items-start gap-2.5">
-            <span className="material-symbols-outlined text-amber-400 text-base shrink-0">shield</span>
+          <div className="glass-card rounded-2xl p-4 border border-white/15 text-[11px] text-slate-200 leading-relaxed font-mono flex items-start gap-2.5 bg-[#060A07]/90">
+            <span className="material-symbols-outlined text-lime-300 text-base shrink-0">shield</span>
             <span>
-              DiabetX AI insights are generated locally using biometric score algorithms. Always consult your endocrinologist for clinical therapy changes.
+              DiabetX AI insights are generated locally using biometric score algorithms. Always consult your physician for clinical decisions.
             </span>
           </div>
         </div>
@@ -139,18 +139,18 @@ function TelemetryRow({
   value: string;
 }) {
   return (
-    <div className="bg-[#060B08]/80 p-3 rounded-xl border border-white/10 space-y-1.5 font-sans">
+    <div className="p-3 rounded-xl bg-[#060A07]/95 border border-white/15 space-y-1.5">
       <div className="flex items-center justify-between text-xs font-mono">
-        <span className="text-slate-200 font-medium">{label}</span>
-        <span className="font-bold text-white">{score}/100</span>
+        <span className="font-bold text-white">{label}</span>
+        <span className="font-extrabold text-lime-300">{score}/100</span>
       </div>
-      <div className="w-full bg-[#132019] h-1.5 rounded-full overflow-hidden">
+      <div className="w-full bg-[#060A07] h-1.5 rounded-full overflow-hidden border border-white/10">
         <div
-          className={`h-full ${color} rounded-full transition-all duration-500`}
+          className={`h-full rounded-full ${color} transition-all duration-500`}
           style={{ width: `${Math.min(100, Math.max(0, score))}%` }}
         />
       </div>
-      <span className="text-[10px] font-mono text-slate-400 block pt-0.5">{value}</span>
+      <span className="text-[10px] font-mono text-slate-300 block truncate font-semibold">{value}</span>
     </div>
   );
 }

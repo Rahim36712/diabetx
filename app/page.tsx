@@ -2,10 +2,8 @@
 
 import { useEffect, useState } from "react";
 import type { TwinEntry, SimulationChangeData } from "@/lib/types";
-import { loadEntries, saveEntry, deleteEntry } from "@/lib/storage";
+import { loadEntries, saveEntry, deleteEntry, DEFAULT_ENTRIES } from "@/lib/storage";
 import { computeScores } from "@/lib/twin";
-import EntryForm from "@/components/EntryForm";
-import ThreeDigitalTwinCanvas from "@/components/ThreeDigitalTwinCanvas";
 import { useNav } from "@/context/NavContext";
 
 import DashboardView from "@/components/views/DashboardView";
@@ -33,44 +31,23 @@ export default function Home() {
     setEntries(deleteEntry(id));
   }
 
-  const latest = entries[entries.length - 1];
-  const scores = latest ? computeScores(latest) : null;
+  // Active entries and score calculations (falling back to baseline if needed)
+  const activeEntries = entries.length > 0 ? entries : DEFAULT_ENTRIES;
+  const latest = activeEntries[activeEntries.length - 1];
+  const scores = computeScores(latest);
 
   return (
-    <main className="md:ml-64 min-h-screen px-4 md:px-10 py-8 flex-1 space-y-8 max-w-6xl mx-auto">
+    <main className="md:ml-64 min-h-screen px-4 md:px-10 py-8 flex-1 space-y-8 max-w-6xl mx-auto font-sans">
       {!hydrated ? (
-        <div className="flex items-center justify-center py-24 text-cyan-400 text-sm font-semibold gap-3 font-mono">
-          <span className="w-2.5 h-2.5 rounded-full bg-cyan-400 animate-ping" />
-          Initializing Digital Twin Baseline...
-        </div>
-      ) : !latest || !scores ? (
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-6 items-center py-6">
-          <div className="md:col-span-6">
-            <EntryForm onSubmit={handleNewEntry} />
-          </div>
-          <div className="md:col-span-6 glass-card rounded-3xl p-8 space-y-6 border border-white/10 relative overflow-hidden">
-            <div className="ambient-glow-cyan" />
-            <div className="w-12 h-12 rounded-2xl gradient-bg flex items-center justify-center text-[#0A0E1A] shadow-lg shadow-cyan-500/25">
-              <span className="material-symbols-filled text-[#0A0E1A] text-2xl font-bold">
-                monitoring
-              </span>
-            </div>
-            <div className="space-y-2">
-              <h2 className="font-display text-2xl font-bold text-[#dee2f6]">
-                Welcome to DiabetX AI
-              </h2>
-              <p className="text-sm text-[#dee2f6]/80 leading-relaxed font-medium">
-                Log your blood glucose, HbA1c, weight, sleep, and exercise metrics to calculate your 0–100 Digital Twin Score and render your personal 3D cyber silhouette.
-              </p>
-            </div>
-            <ThreeDigitalTwinCanvas score={85} className="w-full h-64" />
-          </div>
+        <div className="flex items-center justify-center py-24 text-lime-400 text-sm font-bold gap-3 font-mono">
+          <span className="w-2.5 h-2.5 rounded-full bg-lime-400 animate-ping" />
+          Initializing Digital Twin Engine...
         </div>
       ) : (
         <>
           {(activeTab === "dashboard" || !activeTab) && (
             <DashboardView
-              entries={entries}
+              entries={activeEntries}
               latest={latest}
               scores={scores}
               onNewEntry={handleNewEntry}
@@ -90,7 +67,7 @@ export default function Home() {
 
           {activeTab === "timeline" && (
             <TimelineView
-              entries={entries}
+              entries={activeEntries}
               latest={latest}
             />
           )}

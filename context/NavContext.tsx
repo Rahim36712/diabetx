@@ -8,6 +8,7 @@ export type NavTab =
   | "timeline"
   | "simulator"
   | "ai_coach"
+  | "connected_care"
   | "twin"
   | "aicoach";
 

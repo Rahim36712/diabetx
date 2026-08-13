@@ -1,264 +1,191 @@
-<p align="center">
-  <img src="docs/screenshots/dashboard.jpg" alt="DiabetX AI Dashboard" width="100%"/>
-</p>
+# DiabetX
 
-<h1 align="center">🧬 DiabetX AI — Cyber-Physiological Digital Twin</h1>
+> **A browser-first digital twin for metabolic self-reflection.** DiabetX turns personal health entries into a transparent score, an interactive body model, scenario simulations, grounded coaching, and a new Connected Care workspace.
 
 <p align="center">
-  <strong>An AI-powered digital twin for Type-2 Diabetes and Pre-Diabetes self-management</strong>
+  <img src="docs/screenshots/dashboard.jpg" alt="DiabetX dashboard showing the Digital Twin score and health overview" width="100%" />
 </p>
 
 <p align="center">
-  <a href="https://diabetx.vercel.app"><img src="https://img.shields.io/badge/🌐_LIVE_DEMO-diabetx.vercel.app-00d4aa?style=for-the-badge&labelColor=0A0E1A" alt="Live Demo"/></a>
-  <a href="https://github.com/Rahim36712/diabetx"><img src="https://img.shields.io/badge/GitHub-Repository-181717?style=for-the-badge&logo=github&labelColor=0A0E1A" alt="GitHub"/></a>
+  <strong>Log signals. Explore scenarios. Prepare better care conversations.</strong>
 </p>
 
----
+<p align="center">
+  <a href="#quickstart">Quickstart</a> ·
+  <a href="#product-surface">Product surface</a> ·
+  <a href="#connected-care-workspace">Connected Care</a> ·
+  <a href="#architecture">Architecture</a>
+</p>
 
-## 🌍 The Problem
+## Why DiabetX
 
-**463 million** adults worldwide live with diabetes (IDF Diabetes Atlas, 2023), with Type-2 Diabetes accounting for ~90% of all cases. Most patients struggle with:
+DiabetX is designed as an **educational reflection layer**, not a diagnostic system. It keeps the score engine deterministic and explainable, gives users a visual model of the signals they log, and makes it easier to see patterns before a conversation with a qualified care professional.
 
-- **Fragmented tracking** — glucose logs, weight, sleep, and exercise are scattered across different apps and paper notes.
-- **No predictive insight** — patients can't see how changing one habit (e.g., +30 min walking) would impact their metabolic health *before* committing to it.
-- **Generic advice** — most health apps give cookie-cutter tips instead of personalized, data-grounded guidance.
+The core experience is intentionally browser-first. Daily entries persist locally in the browser, while the optional AI Coach receives a temporary context snapshot only when the user chooses to ask a question. The Connected Care workspace is provider-neutral and begins in clearly labeled fixture mode until a calendar, task, or approved health-data source is connected.
 
-### Who Is This For?
+## Product surface
 
-DiabetX AI is built for **individuals with Type-2 Diabetes or Pre-Diabetes** who want to:
-- Visualize their health as a single, intuitive 0–100 score.
-- Explore "What-If" lifestyle scenarios using a deterministic digital twin simulation.
-- Receive personalized AI coaching grounded in *their own logged data*, not generic articles.
+| Area | What it does |
+|---|---|
+| **Digital Twin score** | Computes a reproducible 0–100 composite score from metabolic, activity, and nutrition signals. |
+| **Interactive body model** | Visualizes the score through a glowing Three.js human silhouette and organ-focused context. |
+| **Trajectory analytics** | Tracks logged glucose, HbA1c, weight, sleep, exercise, and diet quality over time. |
+| **Scenario lab** | Tests hypothetical changes to weight, movement, nutrition, and sleep without a network round-trip. |
+| **AI Health Coach** | Provides short, number-grounded educational reflections using the user’s current context. |
+| **Connected Care workspace** | Brings health data, informational insights, appointments, and reminders into one MCP-ready UI. |
 
----
+## Connected Care workspace
 
-## 🚀 Live Deployed URL
+The newest DiabetX surface is a **provider-neutral integration layer** designed to become the UI boundary for MCP-backed workflows. It keeps the interface useful before a provider is authorized and makes the transition to live integrations explicit.
 
-### 👉 [https://diabetx.vercel.app](https://diabetx.vercel.app)
+### Connected health data hub
 
-Open the link above in any browser — no login, no signup, fully functional.
+The health data hub presents a unified timeline with glucose metrics, date-range filters, source badges, freshness language, and a simulated synchronization event. Records are framed as local log or fixture data until an external source is genuinely connected.
 
----
+<p align="center">
+  <img src="docs/screenshots/connected-care-health.jpg" alt="Connected Care health data hub with metric cards and a unified timeline" width="100%" />
+</p>
 
-## ✨ Features
+### Grounded AI insights
 
-| Feature | Description |
-|---------|-------------|
-| **🧬 Digital Twin Score Engine** | A deterministic, transparent scoring system that computes a 0–100 composite health index from your metabolic markers, activity levels, and nutrition quality. No black-box AI — every score is reproducible and explainable. |
-| **🫀 Interactive 3D Human Model** | A real-time Three.js-rendered glowing cyber-silhouette that responds to your health score — the wireframe color and pulse intensity shift from red (poor) through amber to cyan (excellent). |
-| **📊 Timeline Analytics** | Multi-metric historical trend charts tracking fasting glucose, HbA1c, exercise, sleep, and diet quality over selectable 7/14/30/90-day windows with Recharts interactive tooltips. |
-| **🔮 What-If Simulator** | Adjust weight, exercise, diet quality, and sleep with interactive sliders. See projected score deltas and estimated biomarker changes *instantly* — deterministic formulas, no network round-trip. |
-| **🤖 Gemini AI Health Coach** | A conversational AI assistant powered by Google Gemini API that receives your *actual logged biometrics and simulation data* as context, providing personalized, number-grounded health guidance. |
-| **📝 Daily Entry Logging** | Log weight (kg), HbA1c (%), fasting glucose (mg/dL), sleep (hours), exercise (min/week), and diet quality (1–5) with persistent localStorage. |
-| **📋 Entry History** | Searchable and deletable history table of all logged entries. |
-| **🔒 100% Client-Side Privacy** | All health data stays in your browser's localStorage — nothing is sent to any server. The only network call is the AI Coach chat, which sends a temporary context snapshot to Google's API. |
-| **📱 Responsive Design** | Fully responsive layout with desktop sidebar navigation and mobile bottom navigation bar. |
+The insights view turns the latest logged values into a compact, traceable reflection. It shows the observed trend, data caveats, supporting-record context, and an explicit informational disclaimer rather than presenting a diagnosis or treatment recommendation.
 
----
+<p align="center">
+  <img src="docs/screenshots/connected-care-insights.jpg" alt="Connected Care informational insights view with grounded glucose context" width="100%" />
+</p>
 
-## 🤖 AI Feature — Gemini Health Coach
+### Appointment assistant
 
-### What It Does
+The appointment view includes an upcoming care-review card, a preparation checklist, source status, and a confirmation-gated preview for future calendar writes. Fixture mode never sends an external write.
 
-The AI Health Coach is a conversational assistant that **grounds every response in your actual logged biometrics**. When you ask "How am I doing?", it doesn't give generic diabetes advice — it says "Your fasting glucose of 118 mg/dL is above the healthy range (<100), weighing down your Metabolic score of 76."
+<p align="center">
+  <img src="docs/screenshots/connected-care-appointments.jpg" alt="Connected Care appointment assistant with preparation checklist" width="100%" />
+</p>
 
-When you're running a **What-If Simulation**, the AI also sees your simulated scenario and projected scores, enabling it to comment on hypothetical changes: "With your +60 min/week exercise shift, your projected composite score improves from 78 to 86."
+### Medication reminders
 
-### System Prompt
+The reminders view is local-first. Users can add a reminder, pause or resume it, and see clear language that a reminder represents a planned routine rather than confirmation that medication was taken.
 
-The AI operates under a carefully designed system prompt:
+<p align="center">
+  <img src="docs/screenshots/connected-care-reminders.jpg" alt="Connected Care medication reminders view with local-first routine controls" width="100%" />
+</p>
 
-```
-You are the DiabetX Coach, an educational assistant inside a diabetes
-self-management app. You are talking to someone who is logging their own
-weight, HbA1c, fasting glucose, sleep, exercise, and diet quality, and
-exploring interactive What-If digital twin simulations.
-
-Rules you must follow:
-1. You are NOT a doctor. Never diagnose, never say "you have" a condition,
-   and never recommend specific medication changes or dosages.
-2. Every claim you make about the user's health MUST reference at least one
-   specific number from the DATA block below (e.g. "your fasting glucose of
-   118 mg/dL is..."). Do not give generic advice that ignores their numbers.
-3. If WHAT-IF SIMULATION MODE is active, explicitly address their simulated
-   scenario adjustments and projected score impact.
-4. If a score or metric is missing from the data, say so instead of guessing.
-5. Keep answers short: 3-5 sentences, plain language, no medical jargon
-   without a one-line explanation.
-6. End with one concrete, low-risk next step — never a drug, supplement,
-   or diagnostic claim.
-7. If the user's question is about a medical emergency, tell them to seek
-   in-person or emergency medical care immediately.
-```
-
-### Context Grounding Engine
-
-Each AI request includes a dynamically constructed `DATA` block containing:
-- All current biometric values (weight, HbA1c, glucose, sleep, exercise, diet)
-- Computed Digital Twin scores (composite, metabolic, activity, nutrition)
-- Active What-If simulation deltas and projected scores (when simulator is active)
-
-### Model Fallback Chain
-
-The app uses a **cascading model fallback** for maximum free-tier reliability:
-
-| Priority | Model | Free Tier Limit |
-|----------|-------|-----------------|
-| 1st | `gemini-3.1-flash-lite` | 500 req/day, 15 req/min |
-| 2nd | `gemini-2.5-flash-lite` | 20 req/day, 10 req/min |
-| 3rd | `gemini-2.5-flash` | 20 req/day, 5 req/min |
-| 4th | `gemini-1.5-flash` | Fallback |
-
----
-
-## 🛠️ Tech Stack & Tools
-
-| Category | Technology |
-|----------|-----------|
-| **Framework** | [Next.js 16](https://nextjs.org/) (App Router, Turbopack) |
-| **Language** | [TypeScript](https://www.typescriptlang.org/) 5.6 |
-| **UI Library** | [React 19](https://react.dev/) |
-| **Styling** | [Tailwind CSS 3.4](https://tailwindcss.com/) + Custom Glassmorphism Design System |
-| **3D Rendering** | [Three.js](https://threejs.org/) (WebGL human silhouette with GLSL shaders) |
-| **Charts** | [Recharts 2.15](https://recharts.org/) |
-| **AI Model** | [Google Gemini API](https://ai.google.dev/) (gemini-3.1-flash-lite) |
-| **Deployment** | [Vercel](https://vercel.com/) |
-| **UI Design** | [Google Stitch MCP](https://stitch.withgoogle.com/) (design token generation) |
-| **Data Storage** | Browser localStorage (zero server-side data) |
-| **Font** | [Space Grotesk](https://fonts.google.com/specimen/Space+Grotesk) (headings) + [Inter](https://fonts.google.com/specimen/Inter) (body) |
-| **Icons** | [Material Symbols](https://fonts.google.com/icons) (Filled variant) |
-
----
-
-## 📸 Screenshots
-
-### Dashboard — Digital Twin Score & 3D Model
-![Dashboard View](docs/screenshots/dashboard.jpg)
-> The main dashboard displays your composite 0–100 Digital Twin Score in an animated ring gauge, sub-score breakdown cards (Metabolic, Activity, Nutrition), and a real-time 3D glowing human silhouette rendered with Three.js.
+## Digital Twin experience
 
 ### What-If Simulator
-![Simulator View](docs/screenshots/simulator.jpg)
-> Interactive sliders let you simulate hypothetical lifestyle changes (weight, exercise, diet, sleep) and instantly see projected score deltas and estimated biomarker shifts — all computed deterministically without any AI call.
 
-### AI Health Coach
-![AI Coach View](docs/screenshots/ai-coach.jpg)
-> The Gemini-powered AI Health Coach receives your actual logged biometrics and active simulation data as context, delivering personalized, number-grounded health guidance with quick-prompt suggestions.
+The Scenario Lab uses deterministic formulas to show how hypothetical lifestyle changes affect projected scores and biomarker context. It is intentionally separate from AI generation, so the calculation remains reproducible.
+
+![DiabetX scenario lab](docs/screenshots/scenario-lab.jpg)
 
 ### Timeline Analytics
-![Timeline View](docs/screenshots/timeline.jpg)
-> Multi-metric historical trend charts tracking glucose, HbA1c, exercise, sleep, and diet quality over selectable time windows with interactive tooltips and color-coded trend lines.
 
----
+Historical entries can be inspected through a selectable time window with interactive charts and supporting metrics. The timeline is intended to help users discuss patterns rather than interpret a single reading in isolation.
 
-## 🏗️ Project Structure
+![DiabetX trajectory analytics](docs/screenshots/trajectory.jpg)
 
-```
+## Privacy and safety
+
+DiabetX is built around **explicit user choice and transparent provenance**:
+
+- Health entries remain in browser storage by default.
+- External connections should be read-only until the user grants write permission.
+- External writes must show a preview and require confirmation.
+- Fixture data is labeled and is never presented as a live provider connection.
+- AI reflections are educational and should not be used to diagnose conditions or change medication.
+- Urgent or concerning symptoms require appropriate in-person or emergency medical care.
+
+## Architecture
+
+```text
 diabetx/
 ├── app/
-│   ├── api/coach/route.ts       # Gemini AI Coach API endpoint
-│   ├── globals.css               # Global styles & design tokens
-│   ├── layout.tsx                # Root layout (nav bars, shader bg)
-│   └── page.tsx                  # Main page with tab routing
+│   ├── api/coach/route.ts       # AI Coach API boundary
+│   ├── globals.css              # Global styles and design tokens
+│   ├── layout.tsx               # Root layout and providers
+│   └── page.tsx                 # Main tabbed application shell
 ├── components/
-│   ├── views/
-│   │   ├── DashboardView.tsx     # Dashboard tab content
-│   │   ├── DigitalTwinView.tsx   # 3D Digital Twin tab
-│   │   ├── TimelineView.tsx      # Timeline analytics tab
-│   │   ├── SimulatorView.tsx     # What-If simulator tab
-│   │   └── AiCoachView.tsx       # AI Coach chat tab
-│   ├── AiCoach.tsx               # AI chat component
-│   ├── EntryForm.tsx             # Daily health entry form
-│   ├── EntryHistory.tsx          # Entry history table
-│   ├── ScoreCards.tsx            # Sub-score metric cards
-│   ├── ScoreRing.tsx             # Animated score gauge ring
-│   ├── ShaderBackground.tsx      # WebGL GLSL shader background
-│   ├── SimulationPanel.tsx       # What-If slider controls
-│   ├── ThreeDigitalTwinCanvas.tsx # Three.js 3D human model
-│   ├── TimelineChart.tsx         # Recharts trend charts
-│   ├── SideNavBar.tsx            # Desktop sidebar navigation
-│   ├── TopNavBar.tsx             # Mobile top header
-│   └── BottomNavBar.tsx          # Mobile bottom navigation
+│   ├── McpWorkspaceView.tsx     # Connected Care fixture/MCP-ready workspace
+│   ├── views/                   # Dashboard, twin, timeline, simulator, coach
+│   ├── ThreeDigitalTwinCanvas.tsx
+│   ├── OrganTwinLab.tsx
+│   └── ...
 ├── context/
-│   └── NavContext.tsx            # Global navigation state
+│   └── NavContext.tsx           # Global navigation state
 ├── lib/
-│   ├── twin.ts                   # Digital Twin scoring engine
-│   ├── storage.ts                # localStorage persistence
-│   └── types.ts                  # TypeScript type definitions
-├── .env.example                  # Environment variable template
+│   ├── twin.ts                  # Deterministic score engine
+│   ├── storage.ts               # Local browser persistence
+│   ├── organMetrics.ts          # Organ context metrics
+│   └── types.ts                 # Shared TypeScript types
+├── docs/screenshots/             # README product screenshots
+├── public/models/                # 3D model assets
 ├── package.json
-├── tailwind.config.ts
 └── tsconfig.json
 ```
 
----
-
-## 🚀 How to Run Locally
+## Quickstart
 
 ### Prerequisites
 
-- **Node.js** 18+ (recommended: 20+)
-- **npm** 9+
-- A free **Google Gemini API key** from [Google AI Studio](https://aistudio.google.com/app/apikey)
+- Node.js 18 or newer; Node.js 20 or newer is recommended.
+- npm 9 or newer.
+- A Google Gemini API key if you want to use the optional AI Coach.
 
 ### Installation
 
 ```bash
-# 1. Clone the repository
 git clone https://github.com/Rahim36712/diabetx.git
 cd diabetx
-
-# 2. Install dependencies
 npm install
-
-# 3. Set up environment variables
-cp .env.example .env.local
+copy .env.example .env.local
 ```
 
-Edit `.env.local` and add your Gemini API key:
+Add the Gemini key to `.env.local` when using the AI Coach:
 
 ```env
 GEMINI_API_KEY=your_gemini_api_key_here
 ```
 
-> 💡 Get a **free** API key at [aistudio.google.com/app/apikey](https://aistudio.google.com/app/apikey) — no credit card required.
+Start the development server:
 
 ```bash
-# 4. Start the development server
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) in your browser.
+Then open [http://localhost:3000](http://localhost:3000).
 
-### Production Build
+### Production build
 
 ```bash
 npm run build
 npm start
 ```
 
----
+## Deterministic scoring model
 
-## 🧮 Scoring Algorithm
+The Digital Twin score is computed without an AI model. The score combines three explainable sub-scores:
 
-The Digital Twin Score is **fully deterministic** — no AI model is involved in score computation. This ensures scores are reproducible, transparent, and explainable.
+| Sub-score | Inputs | Composite weight |
+|---|---|---:|
+| **Metabolic** | HbA1c and fasting glucose | 45% |
+| **Activity** | Exercise minutes and sleep proximity | 30% |
+| **Nutrition** | Self-rated diet quality | 25% |
 
-| Sub-Score | Formula | Weight |
-|-----------|---------|--------|
-| **Metabolic** | Average of HbA1c penalty `(100 − (HbA1c − 5.0) × 25)` and Glucose penalty `(100 − (glucose − 90) × 0.8)` | 45% |
-| **Activity** | Average of Exercise fill `(exercise / 150 × 100)` and Sleep proximity `(100 − |sleep − 8| × 20)` | 30% |
-| **Nutrition** | Diet quality normalized `(diet / 5 × 100)` | 25% |
-| **Composite** | `Metabolic × 0.45 + Activity × 0.30 + Nutrition × 0.25` | — |
+All sub-scores are clamped to a 0–100 range. The score is a reflection aid, not a clinical measurement.
 
-All values are clamped to 0–100. Reference ranges are anchored to ADA HbA1c guidelines and WHO exercise recommendations.
+## Development checks
 
----
+The project currently uses the following checks:
 
-## 📄 License
+```bash
+npm run build
+npm run lint
+```
 
-This project was built as an individual coursework submission. All code is original.
+## License
 
----
+This project was built as an individual coursework submission. All code is original to the project unless otherwise noted in the dependency licenses.
 
 <p align="center">
-  Built with ❤️ using Next.js, Three.js, and Google Gemini AI
+  Built with Next.js, React, TypeScript, Three.js, Recharts, Tailwind CSS, and Google Gemini AI.
 </p>
